@@ -5,6 +5,7 @@ import com.mgomez.geolib.file.entity.GeoFile;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.json.Json;
 
 /**
  * @author: Marc Gomez / marc.gomez82 (at) gmail.com

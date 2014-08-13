@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
@@ -28,11 +27,11 @@ public class GeoFileResource {
         return files;
     }
 
-    @Path("{fileName}")
     @POST
-    public Response addFile(@PathParam("fileName") String fileName) {
-        System.out.println("adding file " + fileName);
-        geoFileService.addFile(new GeoFile(fileName));
-        return Response.status(200).entity("Adding file: " + fileName).build();
+    public Response addFile(GeoFile geoFile) {
+        System.out.println("adding file " + geoFile);
+        geoFileService.addFile(geoFile);
+        return Response.status(200).entity("Adding file: " + geoFile.toString()).build();
     }
+
 }
