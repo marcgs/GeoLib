@@ -37,6 +37,10 @@ public class GeoFile {
         return uploadedDate.toEpochSecond(ZoneOffset.UTC);
     }
 
+    public String getFileType() {
+        return "text/xml";
+    }
+
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
@@ -44,4 +48,6 @@ public class GeoFile {
                 .add("uploadedDate", uploadedDate)
                 .toString();
     }
+
+
 }

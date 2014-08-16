@@ -21,4 +21,8 @@ public class GeoFileContainer {
     public void addFile(GeoFile file) {
         geoFiles.add(file);
     }
+
+    public GeoFile getFile(String fileName) {
+        return geoFiles.stream().filter(s -> s.getFileName().equals(fileName)).findFirst().get();
+    }
 }
