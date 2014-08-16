@@ -1,5 +1,6 @@
 package com.mgomez.geolib.file.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.Objects;
 
 import java.time.LocalDateTime;
@@ -8,6 +9,7 @@ import java.time.ZoneOffset;
 /**
  * @author: Marc Gomez / marc.gomez82 (at) gmail.com
  */
+@JsonIgnoreProperties({"content"})
 public class GeoFile {
 
     private String fileName;

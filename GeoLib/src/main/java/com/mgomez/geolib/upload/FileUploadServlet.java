@@ -1,11 +1,12 @@
 package com.mgomez.geolib.upload;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Lists;
 import com.mgomez.geolib.file.boundary.GeoFileService;
 import com.mgomez.geolib.file.entity.GeoFile;
 import org.apache.commons.io.IOUtils;
 
 import javax.inject.Inject;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,23 +41,24 @@ public class FileUploadServlet extends HttpServlet {
             return;
         }
 
-        final Part filePart = request.getPart(INPUT_NAME);
-        final String fileName = getFileName(filePart);
-        byte[] content = IOUtils.toByteArray(filePart.getInputStream());
+        List<GeoFile> uploadedFields = Lists.newArrayList();
+        for (Part filePart : request.getParts()) {
+            if (filePart.getContentType() != null) {
+                final String fileName = getFileName(filePart);
+                byte[] content = IOUtils.toByteArray(filePart.getInputStream());
 
-        final GeoFile geoFile = new GeoFile(fileName, content);
-        logger.info("Adding file: " + geoFile);
-        geoFileService.addFile(geoFile);
-
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/");
-        if (rd != null) {
-            rd.forward(request, response);
-            return;
-        } else {
-            throw new IllegalStateException("Container is not well!");
+                final GeoFile geoFile = new GeoFile(fileName, content);
+                logger.info("Adding file: " + geoFile);
+                geoFileService.addFile(geoFile);
+                uploadedFields.add(geoFile);
+            }
         }
 
+        response.setContentType("application/json");
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(response.getOutputStream(), uploadedFields);
     }
+
 
     private String getFileName(final Part part) {
         final String partHeader = part.getHeader("content-disposition");
