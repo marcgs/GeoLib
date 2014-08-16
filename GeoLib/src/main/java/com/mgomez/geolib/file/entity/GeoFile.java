@@ -11,14 +11,24 @@ import java.time.ZoneOffset;
 public class GeoFile {
 
     private String fileName;
+    private byte[] content;
     private LocalDateTime uploadedDate = LocalDateTime.now();
 
 
     public GeoFile() {
     }
 
+    public GeoFile(String fileName, byte[] content) {
+        this.fileName = fileName;
+        this.content = content;
+    }
+
     public String getFileName() {
         return fileName;
+    }
+
+    public byte[] getContent() {
+        return content;
     }
 
     public long getUploadedDate() {
