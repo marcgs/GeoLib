@@ -13,3 +13,8 @@ body {
 v\: * {
     behavior: url(#default#VML);
 }
+
+#map {
+    width: 100%;
+    height: 90%;
+}
