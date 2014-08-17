@@ -22,7 +22,7 @@ $(function () {
                 zoom: 8,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
-            var map = new google.maps.Map(document.getElementById("map"),
+            var map = new google.maps.Map(document.getElementById("map-canvas"),
                 mapOptions);
             loadGPXFileIntoGoogleMap(map, "/geolib/resources/geofiles/mostRecent");
         }

@@ -14,7 +14,8 @@ v\: * {
     behavior: url(#default#VML);
 }
 
-#map {
-    width: 100%;
-    height: 90%;
+/*Workaround for making map work with bootstrap*/
+html, body, .container-fluid, #map-row, #map-canvas {
+    height: 100%
 }
+
