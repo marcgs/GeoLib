@@ -16,8 +16,7 @@
             <ul class="list-group">
                 <li class="list-group-item" ng-repeat="geofile in geofiles">{{geofile.fileName}}</li>
             </ul>
-            <input type="file" name="files[]" data-url="upload" class="btn btn-primary btn-large"
-                   data-js-selector="fileupload" multiple>
+            <input type="file" name="files[]" data-url="upload" data-js-selector="fileupload" multiple>
         </div>
         <div id="map-canvas" class="col-sm-9 col-md-10"></div>
     </div>
