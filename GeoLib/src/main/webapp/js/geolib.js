@@ -37,10 +37,22 @@
     });
 
     app.controller("GeoLibController", function ($scope, $http, FileLoader, TrackLoader) {
-        FileLoader.loadFiles(function (data) {
-            $scope.geofiles = data;
+        var reload = function () {
+            FileLoader.loadFiles(function (data) {
+                $scope.geofiles = data;
+            });
+            TrackLoader.loadMostRecentTrack();
+        }
+
+        // TODO: clean up registration as callback for fileupload
+        $('[data-js-selector="fileupload"]').fileupload({
+            dataType: 'json',
+            done: function (e, data) {
+                reload();
+            }
         });
-        TrackLoader.loadMostRecentTrack();
+
+        reload();
     });
 
 })();
