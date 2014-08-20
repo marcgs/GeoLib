@@ -37,7 +37,7 @@
     });
 
     app.controller("GeoLibController", function ($scope, $http, FileLoader, TrackLoader) {
-        var reload = function () {
+        $scope.reload = function () {
             FileLoader.loadFiles(function (data) {
                 $scope.geofiles = data;
             });
@@ -48,11 +48,11 @@
         $('[data-js-selector="fileupload"]').fileupload({
             dataType: 'json',
             done: function (e, data) {
-                reload();
+                $scope.reload();
             }
         });
 
-        reload();
+        $scope.reload();
     });
 
 })();
