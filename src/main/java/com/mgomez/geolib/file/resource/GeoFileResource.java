@@ -30,8 +30,8 @@ public class GeoFileResource {
 
     @Path("mostRecent")
     @GET
-    public byte[] getMostRecentFile() {
-        return geoFileService.getMostRecentFile().getContent();
+    public GeoFile getMostRecentFile() {
+        return geoFileService.getMostRecentFile();
     }
 
     @Path("{fileName}")

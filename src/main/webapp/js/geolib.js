@@ -14,7 +14,7 @@
                         };
                         var map = new google.maps.Map(document.getElementById("map-canvas"),
                             mapOptions);
-                        var xmlData = $.parseXML(data);
+                        var xmlData = $.parseXML(data.content);
                         var parser = new GPXParser(xmlData, map);
                         parser.setTrackColour("#ff0000");     // Set the track line colour
                         parser.setTrackWidth(5);          // Set the track line width
