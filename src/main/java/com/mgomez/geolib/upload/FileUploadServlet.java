@@ -32,6 +32,8 @@ public class FileUploadServlet extends HttpServlet {
     private TrackService trackService;
     @Inject
     private MultipartRequestHandler multipartRequestHandler;
+    @Inject
+    private ObjectMapper objectMapper;
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -46,8 +48,7 @@ public class FileUploadServlet extends HttpServlet {
         List<Track> files = Lists.newArrayList();
         files.addAll(multipartRequestHandler.handleUpload(request));
         response.setContentType(APPLICATION_JSON_CONTENT_TYPE);
-        new ObjectMapper().writeValue(response.getOutputStream(), files);
+        objectMapper.writeValue(response.getOutputStream(), files);
     }
-
 
 }
