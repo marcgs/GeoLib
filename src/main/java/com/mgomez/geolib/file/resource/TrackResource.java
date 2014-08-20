@@ -1,5 +1,6 @@
 package com.mgomez.geolib.file.resource;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.mgomez.geolib.file.boundary.TrackService;
 import com.mgomez.geolib.file.entity.Track;
 
@@ -15,10 +16,14 @@ import java.util.List;
 @Path("tracks")
 public class TrackResource {
 
+    @Inject
     private TrackService trackService;
 
-    @Inject
-    public TrackResource(TrackService trackService) {
+    public TrackResource() {
+    }
+
+    @VisibleForTesting
+    TrackResource(TrackService trackService) {
         this.trackService = trackService;
     }
 
