@@ -5,6 +5,7 @@ import com.mgomez.geolib.file.entity.Track;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.Optional;
 
 /**
  * @author: Marc Gomez / marc.gomez82 (at) gmail.com
@@ -15,7 +16,7 @@ public class TrackService {
     @Inject
     private TrackContainer container;
 
-    public ImmutableList<Track> getFiles() {
+    public ImmutableList<Track> getTracks() {
         return ImmutableList.copyOf(container.getFiles());
     }
 
@@ -23,11 +24,11 @@ public class TrackService {
         container.addFile(file);
     }
 
-    public Track getTrack(String trackName) {
-        return container.getFile(trackName);
+    public Optional<Track> getTrack(String trackName) {
+        return Optional.ofNullable(container.getFile(trackName));
     }
 
-    public Track getMostRecentTrack() {
-        return container.getFiles().stream().max((o1, o2) -> (int) (o1.getUploadedDate() - o2.getUploadedDate())).get();
+    public Optional<Track> getMostRecentTrack() {
+        return container.getFiles().stream().max((o1, o2) -> (int) (o1.getUploadedDate() - o2.getUploadedDate()));
     }
 }

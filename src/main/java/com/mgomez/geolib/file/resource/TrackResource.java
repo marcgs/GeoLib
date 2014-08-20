@@ -1,6 +1,5 @@
 package com.mgomez.geolib.file.resource;
 
-import com.google.common.collect.ImmutableList;
 import com.mgomez.geolib.file.boundary.TrackService;
 import com.mgomez.geolib.file.entity.Track;
 
@@ -16,25 +15,27 @@ import java.util.List;
 @Path("tracks")
 public class TrackResource {
 
-    @Inject
     private TrackService trackService;
 
+    @Inject
+    public TrackResource(TrackService trackService) {
+        this.trackService = trackService;
+    }
+
     @GET
-    public List<Track> listFiles() {
-        final ImmutableList<Track> files = trackService.getFiles();
-        System.out.println("getting files: " + files);
-        return files;
+    public List<Track> listAllTracks() {
+        return trackService.getTracks();
     }
 
     @Path("mostRecent")
     @GET
-    public Track getMostRecentFile() {
-        return trackService.getMostRecentTrack();
+    public Track getMostRecentTrack() {
+        return trackService.getMostRecentTrack().orElse(null);
     }
 
     @Path("{fileName}")
     @GET
-    public Track getFile(@PathParam("fileName") String fileName) {
-        return trackService.getTrack(fileName);
+    public Track getTrack(@PathParam("fileName") String fileName) {
+        return trackService.getTrack(fileName).orElse(null);
     }
 }
