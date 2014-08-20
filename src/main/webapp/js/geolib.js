@@ -3,66 +3,49 @@
 
     var app = angular.module('geolib', []);
 
-    app.factory('TrackLoader', function ($http) {
+    function loadMap(trackMeta) {
+        var mapOptions = {
+            zoom: 8,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map-canvas"),
+            mapOptions);
+        var xmlData = $.parseXML(trackMeta.content);
+        var parser = new GPXParser(xmlData, map);
+        parser.setTrackColour("#ff0000");     // Set the track line colour
+        parser.setTrackWidth(5);          // Set the track line width
+        parser.setMinTrackPointDelta(0.001);      // Set the minimum distance between track points
+        parser.centerAndZoom(xmlData);
+        parser.addTrackpointsToMap();         // Add the trackpoints
+        parser.addWaypointsToMap();           // Add the waypoints
+    }
+
+    app.factory('TrackFileService', function ($http) {
         return {
             loadMostRecentTrack: function () {
-                $http({method: 'GET', url: '/geolib/resources/geofiles/mostRecent'}).
-                    success(function (data, status, headers, config) {
-                        var mapOptions = {
-                            zoom: 8,
-                            mapTypeId: google.maps.MapTypeId.ROADMAP
-                        };
-                        var map = new google.maps.Map(document.getElementById("map-canvas"),
-                            mapOptions);
-                        var xmlData = $.parseXML(data.content);
-                        var parser = new GPXParser(xmlData, map);
-                        parser.setTrackColour("#ff0000");     // Set the track line colour
-                        parser.setTrackWidth(5);          // Set the track line width
-                        parser.setMinTrackPointDelta(0.001);      // Set the minimum distance between track points
-                        parser.centerAndZoom(xmlData);
-                        parser.addTrackpointsToMap();         // Add the trackpoints
-                        parser.addWaypointsToMap();           // Add the waypoints
-                    });
+                $http({method: 'GET', url: '/geolib/resources/tracks/mostRecent'}).
+                    success(loadMap);
             },
             loadTrack: function (trackName) {
-                $http({method: 'GET', url: '/geolib/resources/geofiles/' + trackName}).
-                    success(function (data, status, headers, config) {
-                        var mapOptions = {
-                            zoom: 8,
-                            mapTypeId: google.maps.MapTypeId.ROADMAP
-                        };
-                        var map = new google.maps.Map(document.getElementById("map-canvas"),
-                            mapOptions);
-                        var xmlData = $.parseXML(data.content);
-                        var parser = new GPXParser(xmlData, map);
-                        parser.setTrackColour("#ff0000");     // Set the track line colour
-                        parser.setTrackWidth(5);          // Set the track line width
-                        parser.setMinTrackPointDelta(0.001);      // Set the minimum distance between track points
-                        parser.centerAndZoom(xmlData);
-                        parser.addTrackpointsToMap();         // Add the trackpoints
-                        parser.addWaypointsToMap();           // Add the waypoints
-                    });
-            }};
-    });
-
-    app.factory('FileLoader', function ($http) {
-        return {
-            loadFiles: function (callback) {
-                $http({method: 'GET', url: '/geolib/resources/geofiles'}).
+                $http({method: 'GET', url: '/geolib/resources/tracks/' + trackName}).
+                    success(loadMap);
+            },
+            loadTracks: function (callback) {
+                $http({method: 'GET', url: '/geolib/resources/tracks'}).
                     success(function (data, status, headers, config) {
                         callback(data);
                     });
             }};
     });
 
-    app.controller("GeoLibController", function ($scope, $http, FileLoader, TrackLoader) {
-        var reload = function () {
-            FileLoader.loadFiles(function (data) {
-                $scope.geofiles = data;
-            });
-            TrackLoader.loadMostRecentTrack();
-        }
 
+    app.controller("GeoLibController", function ($scope, $http, TrackFileService) {
+        var reload = function () {
+            TrackFileService.loadTracks(function (data) {
+                $scope.tracks = data;
+            });
+            TrackFileService.loadMostRecentTrack();
+        }
         // TODO: clean up registration as callback for fileupload
         $('[data-js-selector="fileupload"]').fileupload({
             dataType: 'json',
@@ -70,11 +53,11 @@
                 reload();
             }
         });
-
         reload();
-        $scope.loadTrack = TrackLoader.loadTrack;
+        $scope.loadTrack = TrackFileService.loadTrack;
     });
 
-})();
+})
+();
 
 

@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author: Marc Gomez / marc.gomez82 (at) gmail.com
  */
-@Path("geofiles")
+@Path("tracks")
 public class GeoFileResource {
 
     @Inject
