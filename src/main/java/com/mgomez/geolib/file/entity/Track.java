@@ -8,17 +8,17 @@ import java.time.ZoneOffset;
 /**
  * @author: Marc Gomez / marc.gomez82 (at) gmail.com
  */
-public class GeoFile {
+public class Track {
 
     private String fileName;
     private String content;
     private LocalDateTime uploadedDate = LocalDateTime.now();
 
 
-    public GeoFile() {
+    public Track() {
     }
 
-    public GeoFile(String fileName, String content) {
+    public Track(String fileName, String content) {
         this.fileName = fileName;
         this.content = content;
     }

@@ -8,8 +8,7 @@
             zoom: 8,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        var map = new google.maps.Map(document.getElementById("map-canvas"),
-            mapOptions);
+        var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
         var xmlData = $.parseXML(trackMeta.content);
         var parser = new GPXParser(xmlData, map);
         parser.setTrackColour("#ff0000");     // Set the track line colour
@@ -37,7 +36,6 @@
                     });
             }};
     });
-
 
     app.controller("GeoLibController", function ($scope, $http, TrackFileService) {
         var reload = function () {

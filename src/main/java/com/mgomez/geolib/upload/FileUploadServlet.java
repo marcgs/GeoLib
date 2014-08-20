@@ -2,8 +2,8 @@ package com.mgomez.geolib.upload;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
-import com.mgomez.geolib.file.boundary.GeoFileService;
-import com.mgomez.geolib.file.entity.GeoFile;
+import com.mgomez.geolib.file.boundary.TrackService;
+import com.mgomez.geolib.file.entity.Track;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -29,7 +29,7 @@ public class FileUploadServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(FileUploadServlet.class.getName());
 
     @Inject
-    private GeoFileService geoFileService;
+    private TrackService trackService;
     @Inject
     private MultipartRequestHandler multipartRequestHandler;
 
@@ -43,7 +43,7 @@ public class FileUploadServlet extends HttpServlet {
             return;
         }
 
-        List<GeoFile> files = Lists.newArrayList();
+        List<Track> files = Lists.newArrayList();
         files.addAll(multipartRequestHandler.handleUpload(request));
         response.setContentType(APPLICATION_JSON_CONTENT_TYPE);
         new ObjectMapper().writeValue(response.getOutputStream(), files);

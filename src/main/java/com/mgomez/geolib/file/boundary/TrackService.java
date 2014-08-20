@@ -1,7 +1,7 @@
 package com.mgomez.geolib.file.boundary;
 
 import com.google.common.collect.ImmutableList;
-import com.mgomez.geolib.file.entity.GeoFile;
+import com.mgomez.geolib.file.entity.Track;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -10,24 +10,24 @@ import javax.inject.Inject;
  * @author: Marc Gomez / marc.gomez82 (at) gmail.com
  */
 @Stateless
-public class GeoFileService {
+public class TrackService {
 
     @Inject
-    private GeoFileContainer container;
+    private TrackContainer container;
 
-    public ImmutableList<GeoFile> getFiles() {
+    public ImmutableList<Track> getFiles() {
         return ImmutableList.copyOf(container.getFiles());
     }
 
-    public void addFile(GeoFile file) {
+    public void addTrack(Track file) {
         container.addFile(file);
     }
 
-    public GeoFile getFile(String fileName) {
-        return container.getFile(fileName);
+    public Track getTrack(String trackName) {
+        return container.getFile(trackName);
     }
 
-    public GeoFile getMostRecentFile() {
+    public Track getMostRecentTrack() {
         return container.getFiles().stream().max((o1, o2) -> (int) (o1.getUploadedDate() - o2.getUploadedDate())).get();
     }
 }

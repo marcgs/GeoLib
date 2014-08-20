@@ -1,8 +1,8 @@
 package com.mgomez.geolib.upload;
 
 import com.google.common.io.CharStreams;
-import com.mgomez.geolib.file.boundary.GeoFileService;
-import com.mgomez.geolib.file.entity.GeoFile;
+import com.mgomez.geolib.file.boundary.TrackService;
+import com.mgomez.geolib.file.entity.Track;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -16,14 +16,14 @@ import java.util.List;
 public class MultipartRequestHandler {
 
     @Inject
-    private GeoFileService geoFileService;
+    private TrackService trackService;
 
-    public List<GeoFile> handleUpload(HttpServletRequest request) throws IOException, ServletException {
-        List<GeoFile> files = new LinkedList<GeoFile>();
+    public List<Track> handleUpload(HttpServletRequest request) throws IOException, ServletException {
+        List<Track> files = new LinkedList<Track>();
         request.getParts().stream().filter(part -> part.getContentType() != null).forEach(part -> {
             final String content = getContent(part);
-            final GeoFile file = new GeoFile(getFilename(part), content);
-            geoFileService.addFile(file);
+            final Track file = new Track(getFilename(part), content);
+            trackService.addTrack(file);
             files.add(file);
         });
         return files;
