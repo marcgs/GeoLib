@@ -19,17 +19,21 @@
         parser.addWaypointsToMap();           // Add the waypoints
     }
 
-    app.factory('TrackFileService', function ($http) {
+    app.factory('TrackService', function ($http) {
         return {
-            loadMostRecentTrack: function () {
+            loadMostRecentTrack: function (callback) {
                 $http({method: 'GET', url: '/geolib/resources/tracks/mostRecent'}).
-                    success(loadMap);
+                    success(function (data, status, headers, config) {
+                        callback(data);
+                    });
             },
-            loadTrack: function (trackName) {
+            loadTrack: function (trackName, callback) {
                 $http({method: 'GET', url: '/geolib/resources/tracks/' + trackName}).
-                    success(loadMap);
+                    success(function (data, status, headers, config) {
+                        callback(data);
+                    });
             },
-            loadTracks: function (callback) {
+            loadAllTracks: function (callback) {
                 $http({method: 'GET', url: '/geolib/resources/tracks'}).
                     success(function (data, status, headers, config) {
                         callback(data);
@@ -37,22 +41,39 @@
             }};
     });
 
-    app.controller("GeoLibController", function ($scope, $http, TrackFileService) {
-        var reload = function () {
-            TrackFileService.loadTracks(function (data) {
+    app.controller("GeoLibController", function ($scope, $http, TrackService) {
+        var activeTrack = undefined;
+        $scope.loadMostRecentTrack = function () {
+            TrackService.loadMostRecentTrack(function (data) {
+                activeTrack = data;
+                loadMap(data);
+            });
+        };
+        $scope.loadTrack = function (fileName) {
+            TrackService.loadTrack(fileName, function (data) {
+                activeTrack = data;
+                loadMap(data);
+            });
+        };
+        $scope.loadAllTracks = function () {
+            TrackService.loadAllTracks(function (data) {
                 $scope.tracks = data;
             });
-            TrackFileService.loadMostRecentTrack();
-        }
+        };
+        $scope.isActiveTrack = function (track) {
+            return activeTrack.fileName === track.fileName;
+        };
+
         // TODO: clean up registration as callback for fileupload
         $('[data-js-selector="fileupload"]').fileupload({
             dataType: 'json',
             done: function (e, data) {
-                reload();
+                $scope.loadAllTracks();
             }
         });
-        reload();
-        $scope.loadTrack = TrackFileService.loadTrack;
+
+        $scope.loadAllTracks();
+        $scope.loadMostRecentTrack();
     });
 
 })
