@@ -65,7 +65,7 @@
             });
         };
         $scope.isActiveTrack = function (track) {
-            return activeTrack.fileName === track.fileName;
+            return activeTrack !== undefined && track !== undefined && activeTrack.fileName === track.fileName;
         };
 
         // TODO: clean up registration as callback for fileupload
