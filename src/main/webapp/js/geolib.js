@@ -23,6 +23,25 @@
                         parser.addTrackpointsToMap();         // Add the trackpoints
                         parser.addWaypointsToMap();           // Add the waypoints
                     });
+            },
+            loadTrack: function (trackName) {
+                $http({method: 'GET', url: '/geolib/resources/geofiles/' + trackName}).
+                    success(function (data, status, headers, config) {
+                        var mapOptions = {
+                            zoom: 8,
+                            mapTypeId: google.maps.MapTypeId.ROADMAP
+                        };
+                        var map = new google.maps.Map(document.getElementById("map-canvas"),
+                            mapOptions);
+                        var xmlData = $.parseXML(data.content);
+                        var parser = new GPXParser(xmlData, map);
+                        parser.setTrackColour("#ff0000");     // Set the track line colour
+                        parser.setTrackWidth(5);          // Set the track line width
+                        parser.setMinTrackPointDelta(0.001);      // Set the minimum distance between track points
+                        parser.centerAndZoom(xmlData);
+                        parser.addTrackpointsToMap();         // Add the trackpoints
+                        parser.addWaypointsToMap();           // Add the waypoints
+                    });
             }};
     });
 
@@ -37,7 +56,7 @@
     });
 
     app.controller("GeoLibController", function ($scope, $http, FileLoader, TrackLoader) {
-        $scope.reload = function () {
+        var reload = function () {
             FileLoader.loadFiles(function (data) {
                 $scope.geofiles = data;
             });
@@ -48,11 +67,12 @@
         $('[data-js-selector="fileupload"]').fileupload({
             dataType: 'json',
             done: function (e, data) {
-                $scope.reload();
+                reload();
             }
         });
 
-        $scope.reload();
+        reload();
+        $scope.loadTrack = TrackLoader.loadTrack;
     });
 
 })();
