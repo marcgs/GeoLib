@@ -74,7 +74,7 @@ public class MultipartRequestHandlerTest {
             fail("RuntimeException expected");
         } catch (RuntimeException ex) {
             //assert
-            assertThat(ex.getMessage(), is("cause"));
+            assertThat(ex.getMessage(), is("java.io.IOException: cause"));
         }
     }
 
