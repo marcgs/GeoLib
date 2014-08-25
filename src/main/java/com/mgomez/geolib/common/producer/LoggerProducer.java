@@ -1,4 +1,4 @@
-package com.mgomez.geolib.file.common.producer;
+package com.mgomez.geolib.common.producer;
 
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
