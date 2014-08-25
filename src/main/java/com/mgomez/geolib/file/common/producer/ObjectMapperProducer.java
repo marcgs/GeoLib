@@ -1,4 +1,4 @@
-package com.mgomez.geolib.upload;
+package com.mgomez.geolib.file.common.producer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

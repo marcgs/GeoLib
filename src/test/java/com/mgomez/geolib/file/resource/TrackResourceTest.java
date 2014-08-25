@@ -5,10 +5,9 @@ import com.mgomez.geolib.file.boundary.TrackService;
 import com.mgomez.geolib.file.entity.Track;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,8 +15,9 @@ import java.util.Optional;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
 public class TrackResourceTest {
 
     @Mock
@@ -30,8 +30,7 @@ public class TrackResourceTest {
         final ImmutableList<Track> expected = ImmutableList.<Track>builder().build();
 
         // train
-        Mockito.reset();
-        Mockito.when(trackService.getTracks()).thenReturn(expected);
+        when(trackService.getTracks()).thenReturn(expected);
 
         // exercise
         final List<Track> actual = trackResource.listAllTracks();
@@ -45,8 +44,7 @@ public class TrackResourceTest {
         final Track expected = Mockito.mock(Track.class);
 
         // train
-        Mockito.reset();
-        Mockito.when(trackService.getMostRecentTrack()).thenReturn(Optional.of(expected));
+        when(trackService.getMostRecentTrack()).thenReturn(Optional.of(expected));
 
         // exercise
         final Track actual = trackResource.getMostRecentTrack();
@@ -57,10 +55,8 @@ public class TrackResourceTest {
 
     @Test
     public void getMostRecentFile_null() {
-
         // train
-        Mockito.reset();
-        Mockito.when(trackService.getMostRecentTrack()).thenReturn(Optional.empty());
+        when(trackService.getMostRecentTrack()).thenReturn(Optional.empty());
 
         // exercise
         final Track actual = trackResource.getMostRecentTrack();
@@ -75,8 +71,8 @@ public class TrackResourceTest {
         final Track expected = Mockito.mock(Track.class);
 
         // train
-        Mockito.reset();
-        Mockito.when(trackService.getTrack(fileName)).thenReturn(Optional.of(expected));
+        reset();
+        when(trackService.getTrack(fileName)).thenReturn(Optional.of(expected));
 
         // exercise
         final Track actual = trackResource.getTrack(fileName);
@@ -90,8 +86,7 @@ public class TrackResourceTest {
         final String fileName = "fileName";
 
         // train
-        Mockito.reset();
-        Mockito.when(trackService.getTrack(fileName)).thenReturn(Optional.empty());
+        when(trackService.getTrack(fileName)).thenReturn(Optional.empty());
 
         // exercise
         final Track actual = trackResource.getTrack(fileName);
@@ -103,6 +98,7 @@ public class TrackResourceTest {
 
     @Before
     public void setUp() {
+        MockitoAnnotations.initMocks(this);
         trackResource = new TrackResource(trackService);
     }
 }

@@ -10,16 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MultipartRequestHandler {
 
-    @Inject
     private TrackService trackService;
 
+    @Inject
+    public MultipartRequestHandler(TrackService trackService) {
+        this.trackService = trackService;
+    }
+
     public List<Track> handleUpload(HttpServletRequest request) throws IOException, ServletException {
-        List<Track> files = new LinkedList<Track>();
+        List<Track> files = new ArrayList<Track>();
         request.getParts().stream().filter(part -> part.getContentType() != null).forEach(part -> {
             final String content = getContent(part);
             final Track file = new Track(getFilename(part), content);
@@ -44,6 +48,6 @@ public class MultipartRequestHandler {
                 return filename.substring(filename.lastIndexOf('/') + 1).substring(filename.lastIndexOf('\\') + 1); // MSIE fix.
             }
         }
-        return null;
+        throw new IllegalArgumentException("No filename found in request");
     }
 }
