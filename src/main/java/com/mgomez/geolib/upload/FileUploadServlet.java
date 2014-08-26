@@ -1,9 +1,6 @@
 package com.mgomez.geolib.upload;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.Lists;
-import com.mgomez.geolib.file.boundary.TrackService;
-import com.mgomez.geolib.file.entity.Track;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -13,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -23,17 +19,20 @@ import java.util.logging.Logger;
 @MultipartConfig
 public class FileUploadServlet extends HttpServlet {
 
+    public static final int ERROR_CODE_NOT_MULTIPART = 406;
     public static final String MULTIPART_FORM_DATA_CONTENT_TYPE = "multipart/form-data";
     public static final String APPLICATION_JSON_CONTENT_TYPE = "application/json";
 
-    private static final Logger logger = Logger.getLogger(FileUploadServlet.class.getName());
+    private MultipartRequestHandler multipartRequestHandler;
+    private ObjectMapper objectMapper;
+    private Logger logger;
 
     @Inject
-    private TrackService trackService;
-    @Inject
-    private MultipartRequestHandler multipartRequestHandler;
-    @Inject
-    private ObjectMapper objectMapper;
+    public FileUploadServlet(MultipartRequestHandler multipartRequestHandler, ObjectMapper objectMapper, Logger logger) {
+        this.multipartRequestHandler = multipartRequestHandler;
+        this.objectMapper = objectMapper;
+        this.logger = logger;
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -41,14 +40,12 @@ public class FileUploadServlet extends HttpServlet {
         final String contentType = request.getContentType();
         if (!contentType.contains(MULTIPART_FORM_DATA_CONTENT_TYPE)) {
             logger.severe("Not multipart request: " + contentType);
-            response.sendError(406, "Not multipart request: " + contentType);
+            response.sendError(ERROR_CODE_NOT_MULTIPART, "Not multipart request: " + contentType);
             return;
         }
 
-        List<Track> files = Lists.newArrayList();
-        files.addAll(multipartRequestHandler.handleUpload(request));
         response.setContentType(APPLICATION_JSON_CONTENT_TYPE);
-        objectMapper.writeValue(response.getOutputStream(), files);
+        objectMapper.writeValue(response.getOutputStream(), multipartRequestHandler.handleUpload(request));
     }
 
 }
