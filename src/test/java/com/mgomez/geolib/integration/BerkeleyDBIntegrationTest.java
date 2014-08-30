@@ -4,10 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import com.mgomez.geolib.track.controller.BerkeleyDBTrackPersistenceController;
 import com.mgomez.geolib.track.entity.Track;
+import com.mgomez.geolib.track.entity.TrackMeta;
 import com.sleepycat.je.DatabaseException;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -24,20 +25,20 @@ public class BerkeleyDBIntegrationTest {
 
     @Test
     public void putAndGetTrack() throws DatabaseException {
-        final Track track = new Track("trackName", "someContent lorem ipsum blah blah blah");
+        final Track track = new Track(new TrackMeta("trackName"), "someContent lorem ipsum blah blah blah");
         controller.addTrack(track);
         final Track retrievedTrack = controller.getTrack("trackName");
-        final List<Track> tracks = controller.getTracks();
+        final List<TrackMeta> trackMetas = controller.listTracks();
 
         assertThat(retrievedTrack.toString(), is(track.toString()));
         //assertThat(tracks.size(), is(1));
-        assertThat(tracks.get(0).getFileName(), is(track.getFileName()));
+        assertThat(trackMetas.get(0).getTrackName(), is(track.getTrackMeta().getTrackName()));
     }
 
     // TODO: Fix this test
     @Ignore
     @Test
-    public void getNonExsistingTrack() throws DatabaseException {
+    public void getNonExistingTrack() throws DatabaseException {
         final Track retrievedTrack = controller.getTrack("nonExistingTrack");
     }
 

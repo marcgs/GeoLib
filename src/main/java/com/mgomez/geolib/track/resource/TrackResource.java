@@ -3,6 +3,7 @@ package com.mgomez.geolib.track.resource;
 import com.google.common.annotations.VisibleForTesting;
 import com.mgomez.geolib.track.boundary.TrackService;
 import com.mgomez.geolib.track.entity.Track;
+import com.mgomez.geolib.track.entity.TrackMeta;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -28,8 +29,8 @@ public class TrackResource {
     }
 
     @GET
-    public List<Track> listAllTracks() {
-        return trackService.getTracks();
+    public List<TrackMeta> listTracks() {
+        return trackService.listTracks();
     }
 
     @Path("mostRecent")

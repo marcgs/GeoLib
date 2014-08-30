@@ -15,10 +15,10 @@
         <div class="col-sm-3 col-md-2">
             <ul class="list-group">
                 <li class="list-group-item"
-                    ng-class="{ active: isActiveTrack(track)}"
-                    ng-repeat="track in tracks"
-                    ng-click="loadTrack(track.fileName)">
-                {{track.fileName}}
+                    ng-repeat="trackMeta in trackMetas"
+                    ng-class="{ active: isActiveTrack(trackMeta)}"
+                    ng-click="loadTrack(trackMeta)">
+                    {{trackMeta.trackName}}
                 </li>
             </ul>
             <input type="file" name="files[]" data-url="upload" data-js-selector="fileupload" multiple>

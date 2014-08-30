@@ -2,7 +2,7 @@ package com.mgomez.geolib.upload;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
-import com.mgomez.geolib.track.entity.Track;
+import com.mgomez.geolib.track.entity.TrackMeta;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -53,7 +53,7 @@ public class FileUploadServletTest {
 
     @Test
     public void doPost() throws Exception {
-        final List<Track> tracks = Lists.newArrayList();
+        final List<TrackMeta> tracks = Lists.newArrayList();
         ServletOutputStream outputStreamMock = Mockito.mock(ServletOutputStream.class);
 
         //train

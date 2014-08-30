@@ -5,13 +5,13 @@
 
     app.factory('MapService', function () {
         return {
-            loadMap: function (trackMeta) {
+            loadMap: function (trackData) {
                 var mapOptions = {
                     zoom: 8,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
                 var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-                var xmlData = $.parseXML(trackMeta.content);
+                var xmlData = $.parseXML(trackData.content);
                 var parser = new GPXParser(xmlData, map);
                 parser.setTrackColour("#ff0000");     // Set the track line colour
                 parser.setTrackWidth(5);          // Set the track line width
@@ -31,13 +31,13 @@
                         callback(data);
                     });
             },
-            loadTrack: function (trackName, callback) {
-                $http({method: 'GET', url: '/geolib/resources/tracks/' + trackName}).
+            loadTrack: function (trackMeta, callback) {
+                $http({method: 'GET', url: '/geolib/resources/tracks/' + trackMeta.trackName}).
                     success(function (data, status, headers, config) {
                         callback(data);
                     });
             },
-            loadAllTracks: function (callback) {
+            listTracks: function (callback) {
                 $http({method: 'GET', url: '/geolib/resources/tracks'}).
                     success(function (data, status, headers, config) {
                         callback(data);
@@ -46,37 +46,37 @@
     });
 
     app.controller("GeoLibController", function ($scope, $http, TrackService, MapService) {
-        var activeTrack = undefined;
+        var activeTrackMeta = undefined;
         $scope.loadMostRecentTrack = function () {
-            TrackService.loadMostRecentTrack(function (data) {
-                activeTrack = data;
-                MapService.loadMap(data);
+            TrackService.loadMostRecentTrack(function (trackData) {
+                activeTrackMeta = trackData.trackMeta;
+                MapService.loadMap(trackData);
             });
         };
-        $scope.loadTrack = function (fileName) {
-            TrackService.loadTrack(fileName, function (data) {
-                activeTrack = data;
-                MapService.loadMap(data);
+        $scope.loadTrack = function (trackMeta) {
+            TrackService.loadTrack(trackMeta, function (trackData) {
+                activeTrackMeta = trackData.trackMeta;
+                MapService.loadMap(trackData);
             });
         };
-        $scope.loadAllTracks = function () {
-            TrackService.loadAllTracks(function (data) {
-                $scope.tracks = data;
+        $scope.listTracks = function () {
+            TrackService.listTracks(function (trackMetas) {
+                $scope.trackMetas = trackMetas;
             });
         };
-        $scope.isActiveTrack = function (track) {
-            return activeTrack !== undefined && track !== undefined && activeTrack.fileName === track.fileName;
+        $scope.isActiveTrack = function (trackMeta) {
+            return activeTrackMeta !== undefined && trackMeta !== undefined && activeTrackMeta.trackName === trackMeta.trackName;
         };
 
         // TODO: clean up registration as callback for fileupload
         $('[data-js-selector="fileupload"]').fileupload({
             dataType: 'json',
-            done: function (e, data) {
-                $scope.loadAllTracks();
+            done: function (e, uploadedTrackMetas) {
+                $scope.listTracks();
             }
         });
 
-        $scope.loadAllTracks();
+        $scope.listTracks();
         $scope.loadMostRecentTrack();
     });
 

@@ -1,9 +1,9 @@
 package com.mgomez.geolib.track.boundary;
 
 import com.google.common.collect.ImmutableList;
-import com.mgomez.geolib.track.controller.BerkeleyDB;
 import com.mgomez.geolib.track.controller.TrackPersistenceController;
 import com.mgomez.geolib.track.entity.Track;
+import com.mgomez.geolib.track.entity.TrackMeta;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -15,12 +15,12 @@ import java.util.Optional;
 @Stateless
 public class TrackService {
 
-    @BerkeleyDB
+    //@BerkeleyDB
     @Inject
     private TrackPersistenceController trackPersistenceController;
 
-    public ImmutableList<Track> getTracks() {
-        return ImmutableList.copyOf(trackPersistenceController.getTracks());
+    public ImmutableList<TrackMeta> listTracks() {
+        return ImmutableList.copyOf(trackPersistenceController.listTracks());
     }
 
     public void addTrack(Track file) {
@@ -32,6 +32,7 @@ public class TrackService {
     }
 
     public Optional<Track> getMostRecentTrack() {
-        return trackPersistenceController.getTracks().stream().max((o1, o2) -> (int) (o1.getUploadedDate().compareTo(o2.getUploadedDate())));
+        return trackPersistenceController.getTracks().stream()
+                .max((o1, o2) -> (int) (o1.getTrackMeta().getUploadedDate().compareTo(o2.getTrackMeta().getUploadedDate())));
     }
 }
