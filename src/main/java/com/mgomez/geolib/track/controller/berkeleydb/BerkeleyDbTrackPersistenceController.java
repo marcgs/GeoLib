@@ -1,10 +1,11 @@
-package com.mgomez.geolib.track.controller;
+package com.mgomez.geolib.track.controller.berkeleydb;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
+import com.mgomez.geolib.track.controller.TrackPersistenceController;
 import com.mgomez.geolib.track.entity.Track;
 import com.mgomez.geolib.track.entity.TrackMeta;
 import com.sleepycat.bind.tuple.StringBinding;
@@ -23,8 +24,8 @@ import java.util.stream.Collectors;
  * @author: Marc Gomez / marc.gomez82 (at) gmail.com
  */
 // TODO: still prototype code.
-@BerkeleyDB
-public class BerkeleyDBTrackPersistenceController implements TrackPersistenceController {
+@BerkeleyDb
+public class BerkeleyDbTrackPersistenceController implements TrackPersistenceController {
 
     @Inject
     private ObjectMapper objectMapper;
@@ -32,7 +33,7 @@ public class BerkeleyDBTrackPersistenceController implements TrackPersistenceCon
     private Database tracks;
 
     @Inject
-    public BerkeleyDBTrackPersistenceController(ObjectMapper objectMapper) {
+    public BerkeleyDbTrackPersistenceController(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 

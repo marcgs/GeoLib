@@ -1,8 +1,7 @@
-package com.mgomez.geolib.integration;
+package com.mgomez.geolib.track.controller.berkeleydb;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
-import com.mgomez.geolib.track.controller.BerkeleyDBTrackPersistenceController;
 import com.mgomez.geolib.track.entity.Track;
 import com.mgomez.geolib.track.entity.TrackMeta;
 import com.sleepycat.je.DatabaseException;
@@ -16,12 +15,9 @@ import java.util.List;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-/**
- * @author: Marc Gomez / marc.gomez82 (at) gmail.com
- */
-public class BerkeleyDBIntegrationTest {
+public class BerkeleyDbTrackPersistenceControllerTest {
 
-    private BerkeleyDBTrackPersistenceController controller;
+    private BerkeleyDbTrackPersistenceController controller;
 
     @Test
     public void putAndGetTrack() throws DatabaseException {
@@ -46,7 +42,7 @@ public class BerkeleyDBIntegrationTest {
     public void setUp() throws DatabaseException {
         final ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JSR310Module());
-        controller = new BerkeleyDBTrackPersistenceController(mapper);
+        controller = new BerkeleyDbTrackPersistenceController(mapper);
         controller.postConstruct();
     }
 

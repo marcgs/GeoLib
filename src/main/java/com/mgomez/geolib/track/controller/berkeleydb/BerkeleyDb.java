@@ -1,4 +1,4 @@
-package com.mgomez.geolib.track.controller;
+package com.mgomez.geolib.track.controller.berkeleydb;
 
 import javax.inject.Qualifier;
 import java.lang.annotation.Retention;
@@ -14,5 +14,5 @@ import static java.lang.annotation.ElementType.TYPE;
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
 @Target({TYPE, FIELD})
-public @interface BerkeleyDB {
+public @interface BerkeleyDb {
 }

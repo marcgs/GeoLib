@@ -1,8 +1,8 @@
 package com.mgomez.geolib.track.boundary;
 
 import com.google.common.collect.ImmutableList;
-import com.mgomez.geolib.track.controller.BerkeleyDB;
 import com.mgomez.geolib.track.controller.TrackPersistenceController;
+import com.mgomez.geolib.track.controller.couchdb.CouchDb;
 import com.mgomez.geolib.track.entity.Track;
 import com.mgomez.geolib.track.entity.TrackMeta;
 
@@ -16,7 +16,7 @@ import java.util.Optional;
 @Stateless
 public class TrackService {
 
-    @BerkeleyDB
+    @CouchDb
     @Inject
     private TrackPersistenceController trackPersistenceController;
 
