@@ -33,15 +33,9 @@ public class TrackResource {
         return trackService.listTracks();
     }
 
-    @Path("mostRecent")
+    @Path("{trackName}")
     @GET
-    public Track getMostRecentTrack() {
-        return trackService.getMostRecentTrack().orElse(null);
-    }
-
-    @Path("{fileName}")
-    @GET
-    public Track getTrack(@PathParam("fileName") String fileName) {
+    public Track getTrack(@PathParam("trackName") String fileName) {
         return trackService.getTrack(fileName).orElse(null);
     }
 }

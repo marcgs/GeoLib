@@ -41,32 +41,6 @@ public class TrackResourceTest {
     }
 
     @Test
-    public void getMostRecentFile() {
-        final Track expected = Mockito.mock(Track.class);
-
-        // train
-        when(trackService.getMostRecentTrack()).thenReturn(Optional.of(expected));
-
-        // exercise
-        final Track actual = trackResource.getMostRecentTrack();
-
-        // assert
-        assertThat(actual, is(expected));
-    }
-
-    @Test
-    public void getMostRecentFile_null() {
-        // train
-        when(trackService.getMostRecentTrack()).thenReturn(Optional.empty());
-
-        // exercise
-        final Track actual = trackResource.getMostRecentTrack();
-
-        // assert
-        assertNull(actual);
-    }
-
-    @Test
     public void getTrack() {
         final String fileName = "fileName";
         final Track expected = Mockito.mock(Track.class);

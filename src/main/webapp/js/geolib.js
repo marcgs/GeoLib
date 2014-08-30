@@ -25,12 +25,6 @@
 
     app.factory('TrackService', function ($http) {
         return {
-            loadMostRecentTrack: function (callback) {
-                $http({method: 'GET', url: '/geolib/resources/tracks/mostRecent'}).
-                    success(function (data, status, headers, config) {
-                        callback(data);
-                    });
-            },
             loadTrack: function (trackMeta, callback) {
                 $http({method: 'GET', url: '/geolib/resources/tracks/' + trackMeta.trackName}).
                     success(function (data, status, headers, config) {
@@ -47,12 +41,6 @@
 
     app.controller("GeoLibController", function ($scope, $http, TrackService, MapService) {
         var activeTrackMeta = undefined;
-        $scope.loadMostRecentTrack = function () {
-            TrackService.loadMostRecentTrack(function (trackData) {
-                activeTrackMeta = trackData.trackMeta;
-                MapService.loadMap(trackData);
-            });
-        };
         $scope.loadTrack = function (trackMeta) {
             TrackService.loadTrack(trackMeta, function (trackData) {
                 activeTrackMeta = trackData.trackMeta;
@@ -77,7 +65,6 @@
         });
 
         $scope.listTracks();
-        $scope.loadMostRecentTrack();
     });
 
 })

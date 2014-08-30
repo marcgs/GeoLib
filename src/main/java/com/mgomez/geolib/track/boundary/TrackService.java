@@ -31,8 +31,4 @@ public class TrackService {
         return Optional.ofNullable(trackPersistenceController.getTrack(trackName));
     }
 
-    public Optional<Track> getMostRecentTrack() {
-        return trackPersistenceController.getTracks().stream()
-                .max((o1, o2) -> (int) (o1.getTrackMeta().getUploadedDate().compareTo(o2.getTrackMeta().getUploadedDate())));
-    }
 }
