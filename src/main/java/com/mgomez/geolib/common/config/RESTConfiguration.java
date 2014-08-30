@@ -1,4 +1,4 @@
-package com.mgomez.geolib.config;
+package com.mgomez.geolib.common.config;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
