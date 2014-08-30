@@ -60,7 +60,9 @@
         $('[data-js-selector="fileupload"]').fileupload({
             dataType: 'json',
             done: function (e, uploadedTrackMetas) {
-                $scope.listTracks();
+                var trackMeta = uploadedTrackMetas.result[0];
+                $scope.trackMetas.push(trackMeta);
+                $scope.loadTrack(trackMeta);
             }
         });
 
