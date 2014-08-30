@@ -37,6 +37,16 @@
             <version>2.4.1</version>
         </dependency>
         <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>berkeleydb</groupId>
+            <artifactId>je</artifactId>
+            <version>3.2.76</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.11</version>
@@ -54,7 +64,6 @@
             <version>1.9.5</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
     <build>
         <finalName>geolib.war</finalName>

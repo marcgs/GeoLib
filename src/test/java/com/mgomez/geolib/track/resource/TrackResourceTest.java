@@ -1,8 +1,8 @@
-package com.mgomez.geolib.file.resource;
+package com.mgomez.geolib.track.resource;
 
 import com.google.common.collect.ImmutableList;
-import com.mgomez.geolib.file.boundary.TrackService;
-import com.mgomez.geolib.file.entity.Track;
+import com.mgomez.geolib.track.boundary.TrackService;
+import com.mgomez.geolib.track.entity.Track;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

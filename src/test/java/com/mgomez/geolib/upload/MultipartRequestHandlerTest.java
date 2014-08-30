@@ -1,8 +1,8 @@
 package com.mgomez.geolib.upload;
 
 import com.google.common.collect.Lists;
-import com.mgomez.geolib.file.boundary.TrackService;
-import com.mgomez.geolib.file.entity.Track;
+import com.mgomez.geolib.track.boundary.TrackService;
+import com.mgomez.geolib.track.entity.Track;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

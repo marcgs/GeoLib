@@ -1,8 +1,8 @@
 package com.mgomez.geolib.upload;
 
 import com.google.common.io.CharStreams;
-import com.mgomez.geolib.file.boundary.TrackService;
-import com.mgomez.geolib.file.entity.Track;
+import com.mgomez.geolib.track.boundary.TrackService;
+import com.mgomez.geolib.track.entity.Track;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;

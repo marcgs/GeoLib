@@ -1,9 +1,8 @@
-package com.mgomez.geolib.file.entity;
+package com.mgomez.geolib.track.entity;
 
 import com.google.common.base.Objects;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 
 /**
  * @author: Marc Gomez / marc.gomez82 (at) gmail.com
@@ -13,6 +12,7 @@ public class Track {
     private String fileName;
     private String content;
     private LocalDateTime uploadedDate = LocalDateTime.now();
+    private String fileType = "text/xml";
 
 
     public Track() {
@@ -31,12 +31,12 @@ public class Track {
         return content;
     }
 
-    public long getUploadedDate() {
-        return uploadedDate.toEpochSecond(ZoneOffset.UTC);
+    public LocalDateTime getUploadedDate() {
+        return uploadedDate;
     }
 
     public String getFileType() {
-        return "text/xml";
+        return fileType;
     }
 
     @Override
@@ -44,6 +44,8 @@ public class Track {
         return Objects.toStringHelper(this)
                 .add("fileName", fileName)
                 .add("uploadedDate", uploadedDate)
+                .add("fileType", fileType)
+                .add("content", content)
                 .toString();
     }
 
