@@ -8,7 +8,7 @@
             loadMap: function (trackData) {
                 var mapOptions = {
                     zoom: 8,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                    mapTypeId: google.maps.MapTypeId.TERRAIN
                 };
                 var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
                 var xmlData = $.parseXML(trackData.content);
@@ -21,7 +21,8 @@
                 parser.addWaypointsToMap();           // Add the waypoints
             }
         };
-    });
+    })
+    ;
 
     app.factory('TrackService', function ($http) {
         return {
