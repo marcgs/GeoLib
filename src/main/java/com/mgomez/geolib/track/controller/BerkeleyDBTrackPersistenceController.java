@@ -62,7 +62,11 @@ public class BerkeleyDBTrackPersistenceController implements TrackPersistenceCon
 
         try {
             tracks.get(null, key, data, null);
-            final List<String> keys = objectMapper.readValue(data.getData(), ArrayList.class);
+            final byte[] content = data.getData();
+            if (content == null) {
+                return Lists.newArrayList();
+            }
+            final List<String> keys = objectMapper.readValue(content, ArrayList.class);
             return keys.stream()
                     .map(TrackMeta::new)
                     .collect(Collectors.toList());
