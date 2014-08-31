@@ -5,27 +5,33 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.base.Objects;
 
+import java.time.LocalDateTime;
+
 /**
  * @author: Marc Gomez / marc.gomez82 (at) gmail.com
  */
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-@JsonIgnoreProperties({"id", "revision"})
+@JsonIgnoreProperties({"revision"})
 public class Track {
 
     @JsonProperty("_id")
     private String id;
-
     @JsonProperty("_rev")
     private String revision;
-
-    private TrackMeta trackMeta;
+    private String name;
+    private LocalDateTime uploadedDate = LocalDateTime.now();
+    private String fileType = "text/xml";
     private String content;
 
     public Track() {
     }
 
-    public Track(TrackMeta trackMeta, String content) {
-        this.trackMeta = trackMeta;
+    public Track(String name) {
+        this.name = name;
+    }
+
+    public Track(String name, String content) {
+        this.name = name;
         this.content = content;
     }
 
@@ -45,8 +51,16 @@ public class Track {
         this.revision = revision;
     }
 
-    public TrackMeta getTrackMeta() {
-        return trackMeta;
+    public String getName() {
+        return name;
+    }
+
+    public LocalDateTime getUploadedDate() {
+        return uploadedDate;
+    }
+
+    public String getFileType() {
+        return fileType;
     }
 
     public String getContent() {
@@ -56,7 +70,9 @@ public class Track {
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
-                .add("trackMeta", trackMeta)
+                .add("name", name)
+                .add("uploadedDate", uploadedDate)
+                .add("fileType", fileType)
                 .add("content", content)
                 .toString();
     }

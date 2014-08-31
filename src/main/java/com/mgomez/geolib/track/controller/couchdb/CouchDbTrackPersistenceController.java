@@ -4,7 +4,6 @@ import com.mgomez.geolib.config.GeoLibConfiguration;
 import com.mgomez.geolib.config.GeoLibConfigurationKey;
 import com.mgomez.geolib.track.controller.TrackPersistenceController;
 import com.mgomez.geolib.track.entity.Track;
-import com.mgomez.geolib.track.entity.TrackMeta;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.CouchDbInstance;
 import org.ektorp.http.HttpClient;
@@ -16,7 +15,6 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.net.MalformedURLException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author: Marc Gomez / marc.gomez82 (at) gmail.com
@@ -38,11 +36,12 @@ public class CouchDbTrackPersistenceController implements TrackPersistenceContro
         CouchDbInstance dbInstance = new StdCouchDbInstance(httpClient);
         CouchDbConnector db = new StdCouchDbConnector(config.getConfigEntry(GeoLibConfigurationKey.DB_NAME), dbInstance, new CouchDbGeoLibObjectMapperFactory());
         trackRepository = new CouchDbTrackRepository(db);
+        trackRepository.initStandardDesignDocument();
     }
 
     @Override
-    public List<TrackMeta> listTracks() {
-        return trackRepository.getAll().stream().map(t -> t.getTrackMeta()).collect(Collectors.toList());
+    public List<Track> listTracks() {
+        return trackRepository.getAll();
     }
 
     @Override
@@ -51,12 +50,7 @@ public class CouchDbTrackPersistenceController implements TrackPersistenceContro
     }
 
     @Override
-    public Track getTrack(String trackName) {
-        return trackRepository.getAll().stream().filter(t -> t.getTrackMeta().getTrackName().equals(trackName)).findFirst().get();
-    }
-
-    @Override
-    public List<Track> getTracks() {
-        return trackRepository.getAll();
+    public Track getTrackById(String id) {
+        return trackRepository.get(id);
     }
 }

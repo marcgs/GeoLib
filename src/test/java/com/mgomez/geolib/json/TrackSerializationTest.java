@@ -3,7 +3,6 @@ package com.mgomez.geolib.json;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import com.mgomez.geolib.track.entity.Track;
-import com.mgomez.geolib.track.entity.TrackMeta;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -18,7 +17,7 @@ public class TrackSerializationTest {
 
     @Test
     public void trackSerialization() throws IOException {
-        final Track track = new Track(new TrackMeta("fileName"), "someContent lorem ipsum blah blah blah");
+        final Track track = new Track("fileName", "someContent lorem ipsum blah blah blah");
 
         final ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JSR310Module());

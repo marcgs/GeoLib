@@ -3,7 +3,6 @@ package com.mgomez.geolib.track.resource;
 import com.google.common.collect.ImmutableList;
 import com.mgomez.geolib.track.boundary.TrackService;
 import com.mgomez.geolib.track.entity.Track;
-import com.mgomez.geolib.track.entity.TrackMeta;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -28,13 +27,13 @@ public class TrackResourceTest {
 
     @Test
     public void listFiles() {
-        final ImmutableList<TrackMeta> expected = ImmutableList.<TrackMeta>builder().build();
+        final ImmutableList<Track> expected = ImmutableList.<Track>builder().build();
 
         // train
         when(trackService.listTracks()).thenReturn(expected);
 
         // exercise
-        final List<TrackMeta> actual = trackResource.listTracks();
+        final List<Track> actual = trackResource.listTracks();
 
         // assert
         assertThat(actual, is(expected));

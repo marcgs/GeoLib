@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import com.mgomez.geolib.track.controller.TrackPersistenceController;
 import com.mgomez.geolib.track.entity.Track;
-import com.mgomez.geolib.track.entity.TrackMeta;
 import com.sleepycat.bind.tuple.StringBinding;
 import com.sleepycat.je.*;
 
@@ -56,7 +55,7 @@ public class BerkeleyDbTrackPersistenceController implements TrackPersistenceCon
     }
 
     @Override
-    public List<TrackMeta> listTracks() {
+    public List<Track> listTracks() {
         DatabaseEntry key = new DatabaseEntry();
         DatabaseEntry data = new DatabaseEntry();
         StringBinding.stringToEntry("keyInventory", key);
@@ -69,7 +68,7 @@ public class BerkeleyDbTrackPersistenceController implements TrackPersistenceCon
             }
             final List<String> keys = objectMapper.readValue(content, ArrayList.class);
             return keys.stream()
-                    .map(TrackMeta::new)
+                    .map(Track::new)
                     .collect(Collectors.toList());
         } catch (DatabaseException e) {
             e.printStackTrace();
@@ -88,7 +87,7 @@ public class BerkeleyDbTrackPersistenceController implements TrackPersistenceCon
         try {
             DatabaseEntry key = new DatabaseEntry();
             DatabaseEntry data = new DatabaseEntry();
-            StringBinding.stringToEntry(track.getTrackMeta().getTrackName(), key);
+            StringBinding.stringToEntry(track.getName(), key);
             final String val = objectMapper.writeValueAsString(track);
             StringBinding.stringToEntry(val, data);
             tracks.put(null, key, data);
@@ -100,7 +99,7 @@ public class BerkeleyDbTrackPersistenceController implements TrackPersistenceCon
 
             final byte[] byteData = data.getData();
             final List<String> keys = byteData == null ? Lists.newArrayList() : objectMapper.readValue(byteData, List.class);
-            keys.add(track.getTrackMeta().getTrackName());
+            keys.add(track.getName());
             data = new DatabaseEntry();
             StringBinding.stringToEntry(objectMapper.writeValueAsString(keys), data);
             tracks.put(null, keyInventoryKey, data);
@@ -115,7 +114,7 @@ public class BerkeleyDbTrackPersistenceController implements TrackPersistenceCon
     }
 
     @Override
-    public Track getTrack(String trackName) {
+    public Track getTrackById(String trackName) {
         DatabaseEntry key = new DatabaseEntry();
         DatabaseEntry data = new DatabaseEntry();
         StringBinding.stringToEntry(trackName, key);
@@ -133,11 +132,5 @@ public class BerkeleyDbTrackPersistenceController implements TrackPersistenceCon
         }
         return null;
     }
-
-    @Override
-    public List<Track> getTracks() {
-        return null;
-    }
-
 
 }

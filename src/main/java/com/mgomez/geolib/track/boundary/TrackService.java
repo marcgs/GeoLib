@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import com.mgomez.geolib.track.controller.TrackPersistenceController;
 import com.mgomez.geolib.track.controller.couchdb.CouchDb;
 import com.mgomez.geolib.track.entity.Track;
-import com.mgomez.geolib.track.entity.TrackMeta;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -20,7 +19,7 @@ public class TrackService {
     @Inject
     private TrackPersistenceController trackPersistenceController;
 
-    public ImmutableList<TrackMeta> listTracks() {
+    public ImmutableList<Track> listTracks() {
         return ImmutableList.copyOf(trackPersistenceController.listTracks());
     }
 
@@ -28,8 +27,8 @@ public class TrackService {
         trackPersistenceController.addTrack(file);
     }
 
-    public Optional<Track> getTrack(String trackName) {
-        return Optional.ofNullable(trackPersistenceController.getTrack(trackName));
+    public Optional<Track> getTrack(String id) {
+        return Optional.ofNullable(trackPersistenceController.getTrackById(id));
     }
 
 }

@@ -3,7 +3,6 @@ package com.mgomez.geolib.upload;
 import com.google.common.io.CharStreams;
 import com.mgomez.geolib.track.boundary.TrackService;
 import com.mgomez.geolib.track.entity.Track;
-import com.mgomez.geolib.track.entity.TrackMeta;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -23,15 +22,14 @@ public class MultipartRequestHandler {
         this.trackService = trackService;
     }
 
-    public List<TrackMeta> handleUpload(HttpServletRequest request) throws IOException, ServletException {
-        List<TrackMeta> files = new ArrayList<TrackMeta>();
+    public List<Track> handleUpload(HttpServletRequest request) throws IOException, ServletException {
+        List<Track> files = new ArrayList<Track>();
         request.getParts().stream().filter(part -> part.getContentType() != null).forEach(part -> {
             final String content = getContent(part);
             final String filename = getFilename(part);
-            final TrackMeta trackMeta = new TrackMeta(filename);
-            final Track track = new Track(trackMeta, content);
+            final Track track = new Track(filename, content);
             trackService.addTrack(track);
-            files.add(trackMeta);
+            files.add(track);
         });
         return files;
     }
