@@ -2,7 +2,7 @@ package com.mgomez.geolib.track.controller.couchdb;
 
 import com.mgomez.geolib.config.GeoLibConfiguration;
 import com.mgomez.geolib.config.GeoLibConfigurationKey;
-import com.mgomez.geolib.track.entity.Track;
+import com.mgomez.geolib.track.entity.TrackDocument;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.CouchDbInstance;
 import org.ektorp.http.HttpClient;
@@ -35,7 +35,7 @@ public class CouchDbIntegrationTest {
         CouchDbConnector db = new StdCouchDbConnector(config.getConfigEntry(GeoLibConfigurationKey.DB_NAME), dbInstance, new CouchDbGeoLibObjectMapperFactory());
 
         CouchDbTrackRepository repo = new CouchDbTrackRepository(db);
-        repo.add(new Track("testFile", "some content abcdefghijk"));
-        final List<Track> all = repo.getAll();
+        repo.add(new TrackDocument("testFile", "some content abcdefghijk"));
+        final List<TrackDocument> all = repo.getAll();
     }
 }

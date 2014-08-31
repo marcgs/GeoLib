@@ -1,6 +1,6 @@
 package com.mgomez.geolib.track.controller;
 
-import com.mgomez.geolib.track.entity.Track;
+import com.mgomez.geolib.track.entity.TrackDocument;
 
 import java.util.List;
 
@@ -9,10 +9,10 @@ import java.util.List;
  */
 public interface TrackPersistenceController {
 
-    List<Track> listTracks();
+    List<TrackDocument> listTracks();
 
-    void addTrack(Track track);
+    void addTrack(TrackDocument track);
 
-    Track getTrackById(String trackName);
+    TrackDocument getTrackById(String trackName);
 
 }

@@ -2,7 +2,7 @@ package com.mgomez.geolib.track.controller.berkeleydb;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
-import com.mgomez.geolib.track.entity.Track;
+import com.mgomez.geolib.track.entity.TrackDocument;
 import com.sleepycat.je.DatabaseException;
 import org.junit.After;
 import org.junit.Before;
@@ -20,10 +20,10 @@ public class BerkeleyDbTrackPersistenceControllerTest {
 
     @Test
     public void putAndGetTrack() throws DatabaseException {
-        final Track track = new Track("trackName", "someContent lorem ipsum blah blah blah");
+        final TrackDocument track = new TrackDocument("trackName", "someContent lorem ipsum blah blah blah");
         controller.addTrack(track);
-        final Track retrievedTrack = controller.getTrackById("trackName");
-        final List<Track> tracks = controller.listTracks();
+        final TrackDocument retrievedTrack = controller.getTrackById("trackName");
+        final List<TrackDocument> tracks = controller.listTracks();
 
         assertThat(retrievedTrack.toString(), is(track.toString()));
         //assertThat(tracks.size(), is(1));
@@ -34,7 +34,7 @@ public class BerkeleyDbTrackPersistenceControllerTest {
     @Ignore
     @Test
     public void getNonExistingTrack() throws DatabaseException {
-        final Track retrievedTrack = controller.getTrackById("nonExistingTrack");
+        final TrackDocument retrievedTrack = controller.getTrackById("nonExistingTrack");
     }
 
     @Before

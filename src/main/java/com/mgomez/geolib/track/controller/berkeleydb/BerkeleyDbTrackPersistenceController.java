@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import com.mgomez.geolib.track.controller.TrackPersistenceController;
-import com.mgomez.geolib.track.entity.Track;
+import com.mgomez.geolib.track.entity.TrackDocument;
 import com.sleepycat.bind.tuple.StringBinding;
 import com.sleepycat.je.*;
 
@@ -55,7 +55,7 @@ public class BerkeleyDbTrackPersistenceController implements TrackPersistenceCon
     }
 
     @Override
-    public List<Track> listTracks() {
+    public List<TrackDocument> listTracks() {
         DatabaseEntry key = new DatabaseEntry();
         DatabaseEntry data = new DatabaseEntry();
         StringBinding.stringToEntry("keyInventory", key);
@@ -68,7 +68,7 @@ public class BerkeleyDbTrackPersistenceController implements TrackPersistenceCon
             }
             final List<String> keys = objectMapper.readValue(content, ArrayList.class);
             return keys.stream()
-                    .map(Track::new)
+                    .map(TrackDocument::new)
                     .collect(Collectors.toList());
         } catch (DatabaseException e) {
             e.printStackTrace();
@@ -83,7 +83,7 @@ public class BerkeleyDbTrackPersistenceController implements TrackPersistenceCon
     }
 
     @Override
-    public void addTrack(Track track) {
+    public void addTrack(TrackDocument track) {
         try {
             DatabaseEntry key = new DatabaseEntry();
             DatabaseEntry data = new DatabaseEntry();
@@ -114,7 +114,7 @@ public class BerkeleyDbTrackPersistenceController implements TrackPersistenceCon
     }
 
     @Override
-    public Track getTrackById(String trackName) {
+    public TrackDocument getTrackById(String trackName) {
         DatabaseEntry key = new DatabaseEntry();
         DatabaseEntry data = new DatabaseEntry();
         StringBinding.stringToEntry(trackName, key);
@@ -126,7 +126,7 @@ public class BerkeleyDbTrackPersistenceController implements TrackPersistenceCon
 
         try {
             final String content = StringBinding.entryToString(data);
-            return objectMapper.readValue(content, Track.class);
+            return objectMapper.readValue(content, TrackDocument.class);
         } catch (IOException e) {
             e.printStackTrace();
         }

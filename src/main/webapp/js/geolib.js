@@ -27,7 +27,7 @@
     app.factory('TrackService', function ($http) {
         return {
             loadTrack: function (track, callback) {
-                $http({method: 'GET', url: '/geolib/resources/tracks/' + track._id}).
+                $http({method: 'GET', url: '/geolib/resources/tracks/' + track.id}).
                     success(function (data, status, headers, config) {
                         callback(data);
                     });
@@ -54,7 +54,7 @@
             });
         };
         $scope.isActiveTrack = function (track) {
-            return activeTrack !== undefined && track !== undefined && activeTrack.name === track.name;
+            return activeTrack !== undefined && track !== undefined && activeTrack.id === track.id;
         };
 
         // TODO: clean up registration as callback for fileupload

@@ -2,13 +2,15 @@ package com.mgomez.geolib.track.resource;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.mgomez.geolib.track.boundary.TrackService;
-import com.mgomez.geolib.track.entity.Track;
+import com.mgomez.geolib.track.entity.TrackDocument;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author: Marc Gomez / marc.gomez82 (at) gmail.com
@@ -28,13 +30,19 @@ public class TrackResource {
     }
 
     @GET
-    public List<Track> listTracks() {
-        return trackService.listTracks();
+    public List<TrackMeta> listTracks() {
+        return trackService.listTracks().stream().map(new TrackMetaFactory()).collect(Collectors.toList());
     }
 
     @Path("{id}")
     @GET
-    public Track getTrack(@PathParam("id") String id) {
-        return trackService.getTrack(id).orElse(null);
+    public TrackContent getTrack(@PathParam("id") String id) {
+        final Optional<TrackDocument> trackOptional = trackService.getTrack(id);
+        if (trackOptional.isPresent()) {
+            final TrackDocument track = trackOptional.get();
+            return new TrackContent(track.getId(), track.getContent());
+        }
+        return null;
+
     }
 }

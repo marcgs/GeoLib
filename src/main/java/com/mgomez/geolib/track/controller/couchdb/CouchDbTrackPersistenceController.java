@@ -3,7 +3,7 @@ package com.mgomez.geolib.track.controller.couchdb;
 import com.mgomez.geolib.config.GeoLibConfiguration;
 import com.mgomez.geolib.config.GeoLibConfigurationKey;
 import com.mgomez.geolib.track.controller.TrackPersistenceController;
-import com.mgomez.geolib.track.entity.Track;
+import com.mgomez.geolib.track.entity.TrackDocument;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.CouchDbInstance;
 import org.ektorp.http.HttpClient;
@@ -40,17 +40,17 @@ public class CouchDbTrackPersistenceController implements TrackPersistenceContro
     }
 
     @Override
-    public List<Track> listTracks() {
+    public List<TrackDocument> listTracks() {
         return trackRepository.getAll();
     }
 
     @Override
-    public void addTrack(Track track) {
+    public void addTrack(TrackDocument track) {
         trackRepository.add(track);
     }
 
     @Override
-    public Track getTrackById(String id) {
+    public TrackDocument getTrackById(String id) {
         return trackRepository.get(id);
     }
 }

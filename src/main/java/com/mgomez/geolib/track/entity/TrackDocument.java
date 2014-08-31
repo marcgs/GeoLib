@@ -1,54 +1,32 @@
 package com.mgomez.geolib.track.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.base.Objects;
+import org.ektorp.Attachment;
+import org.ektorp.support.CouchDbDocument;
 
 import java.time.LocalDateTime;
 
 /**
  * @author: Marc Gomez / marc.gomez82 (at) gmail.com
  */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-@JsonIgnoreProperties({"revision"})
-public class Track {
+public class TrackDocument extends CouchDbDocument {
 
-    @JsonProperty("_id")
-    private String id;
-    @JsonProperty("_rev")
-    private String revision;
     private String name;
-    private LocalDateTime uploadedDate = LocalDateTime.now();
+    private LocalDateTime uploadedDate;
     private String fileType = "text/xml";
     private String content;
 
-    public Track() {
+    public TrackDocument() {
     }
 
-    public Track(String name) {
-        this.name = name;
+    public TrackDocument(String name) {
+        this(name, null);
     }
 
-    public Track(String name, String content) {
+    public TrackDocument(String name, String content) {
         this.name = name;
+        this.uploadedDate = LocalDateTime.now();
         this.content = content;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getRevision() {
-        return revision;
-    }
-
-    public void setRevision(String revision) {
-        this.revision = revision;
     }
 
     public String getName() {
@@ -65,6 +43,11 @@ public class Track {
 
     public String getContent() {
         return content;
+    }
+
+    @Override
+    public void addInlineAttachment(Attachment a) {
+        super.addInlineAttachment(a);
     }
 
     @Override
