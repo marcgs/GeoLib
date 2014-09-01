@@ -22,9 +22,13 @@ import java.util.List;
 @CouchDb
 public class CouchDbTrackPersistenceController implements TrackPersistenceController {
 
-    @Inject
     private GeoLibConfiguration config;
     private CouchDbTrackRepository trackRepository;
+
+    @Inject
+    public CouchDbTrackPersistenceController(GeoLibConfiguration config) {
+        this.config = config;
+    }
 
     @PostConstruct
     public void postConstruct() throws MalformedURLException {
@@ -52,5 +56,10 @@ public class CouchDbTrackPersistenceController implements TrackPersistenceContro
     @Override
     public TrackDocument getTrackById(String id) {
         return trackRepository.get(id);
+    }
+
+    @Override
+    public void deleteTrack(TrackDocument track) {
+        trackRepository.remove(track);
     }
 }

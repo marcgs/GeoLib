@@ -32,4 +32,10 @@ public class InMemoryTrackPersistenceController implements TrackPersistenceContr
     public TrackDocument getTrackById(String id) {
         return tracks.stream().filter(t -> t.getId().equals(id)).findFirst().get();
     }
+
+    @Override
+    public void deleteTrack(TrackDocument track) {
+        // TODO: fix remove
+        tracks.remove(track);
+    }
 }

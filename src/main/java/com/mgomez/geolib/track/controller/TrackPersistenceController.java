@@ -13,6 +13,8 @@ public interface TrackPersistenceController {
 
     void addTrack(TrackDocument track);
 
-    TrackDocument getTrackById(String trackName);
+    TrackDocument getTrackById(String id);
+
+    void deleteTrack(TrackDocument track);
 
 }

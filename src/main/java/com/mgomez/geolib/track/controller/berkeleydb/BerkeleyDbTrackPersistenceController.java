@@ -114,10 +114,10 @@ public class BerkeleyDbTrackPersistenceController implements TrackPersistenceCon
     }
 
     @Override
-    public TrackDocument getTrackById(String trackName) {
+    public TrackDocument getTrackById(String id) {
         DatabaseEntry key = new DatabaseEntry();
         DatabaseEntry data = new DatabaseEntry();
-        StringBinding.stringToEntry(trackName, key);
+        StringBinding.stringToEntry(id, key);
         try {
             tracks.get(null, key, data, null);
         } catch (DatabaseException e) {
@@ -131,6 +131,11 @@ public class BerkeleyDbTrackPersistenceController implements TrackPersistenceCon
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public void deleteTrack(TrackDocument track) {
+
     }
 
 }
