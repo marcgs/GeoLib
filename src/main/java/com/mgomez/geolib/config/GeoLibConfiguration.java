@@ -46,12 +46,16 @@ public class GeoLibConfiguration {
         return props;
     }
 
-    private void loadConfigFile(Properties props) {
+    @VisibleForTesting
+    void loadConfigFile(Properties props) {
+        InputStream in = this.getClass().getClassLoader().getResourceAsStream(configFile);
+        if (in == null) {
+            throw new IllegalArgumentException("Property file not found: " + configFile);
+        }
         try {
-            InputStream in = this.getClass().getClassLoader().getResourceAsStream(configFile);
             props.load(in);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Could not load property file: " + configFile, e);
         }
     }
 
