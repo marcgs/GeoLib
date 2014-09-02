@@ -12,13 +12,14 @@ public class CouchDbGeoLibObjectMapperFactory extends StdObjectMapperFactory {
 
     private StdObjectMapperFactory delegate = new StdObjectMapperFactory();
 
-
+    @Override
     public synchronized ObjectMapper createObjectMapper() {
         final ObjectMapper om = delegate.createObjectMapper();
         om.registerModule(new JSR310Module());
         return om;
     }
 
+    @Override
     public ObjectMapper createObjectMapper(CouchDbConnector connector) {
         final ObjectMapper om = delegate.createObjectMapper(connector);
         om.registerModule(new JSR310Module());
