@@ -1,5 +1,6 @@
 package com.mgomez.geolib.track.boundary;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
 import com.mgomez.geolib.track.controller.TrackPersistenceController;
 import com.mgomez.geolib.track.controller.couchdb.CouchDb;
@@ -17,18 +18,26 @@ public class TrackService {
 
     @CouchDb
     @Inject
-    private TrackPersistenceController trackPersistenceController;
+    private TrackPersistenceController controller;
+
+    public TrackService() {
+    }
+
+    @VisibleForTesting
+    TrackService(TrackPersistenceController controller) {
+        this.controller = controller;
+    }
 
     public ImmutableList<TrackDocument> listTracks() {
-        return ImmutableList.copyOf(trackPersistenceController.listTracks());
+        return ImmutableList.copyOf(controller.listTracks());
     }
 
     public void addTrack(TrackDocument file) {
-        trackPersistenceController.addTrack(file);
+        controller.addTrack(file);
     }
 
     public Optional<TrackDocument> getTrack(String id) {
-        return Optional.ofNullable(trackPersistenceController.getTrackById(id));
+        return Optional.ofNullable(controller.getTrackById(id));
     }
 
 }
