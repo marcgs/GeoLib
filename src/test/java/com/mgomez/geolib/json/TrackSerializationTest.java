@@ -6,6 +6,7 @@ import com.mgomez.geolib.track.entity.TrackDocument;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -17,7 +18,7 @@ public class TrackSerializationTest {
 
     @Test
     public void trackSerialization() throws IOException {
-        final TrackDocument track = new TrackDocument("fileName", "someContent lorem ipsum blah blah blah");
+        final TrackDocument track = new TrackDocument("fileName", LocalDateTime.now());
 
         final ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JSR310Module());

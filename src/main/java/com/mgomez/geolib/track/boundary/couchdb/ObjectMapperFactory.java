@@ -1,4 +1,4 @@
-package com.mgomez.geolib.track.controller.couchdb;
+package com.mgomez.geolib.track.boundary.couchdb;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
@@ -8,7 +8,7 @@ import org.ektorp.impl.StdObjectMapperFactory;
 /**
  * @author: Marc Gomez / marc.gomez82 (at) gmail.com
  */
-public class CouchDbGeoLibObjectMapperFactory extends StdObjectMapperFactory {
+public class ObjectMapperFactory extends StdObjectMapperFactory {
 
     private StdObjectMapperFactory delegate = new StdObjectMapperFactory();
 

@@ -9,8 +9,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * @author: Marc Gomez / marc.gomez82 (at) gmail.com
@@ -30,19 +28,13 @@ public class TrackResource {
     }
 
     @GET
-    public List<TrackMeta> listTracks() {
-        return trackService.listTracks().stream().map(new TrackMetaFactory()).collect(Collectors.toList());
+    public List<TrackDocument> listTracks() {
+        return trackService.listTracks();
     }
 
     @Path("{id}")
     @GET
-    public TrackContent getTrack(@PathParam("id") String id) {
-        final Optional<TrackDocument> trackOptional = trackService.getTrack(id);
-        if (trackOptional.isPresent()) {
-            final TrackDocument track = trackOptional.get();
-            return new TrackContent(track.getId(), track.getContent());
-        }
-        return null;
-
+    public String getTrackContent(@PathParam("id") String id) {
+        return trackService.getTrackContent(id);
     }
 }

@@ -5,13 +5,13 @@
 
     app.factory('MapService', function () {
         return {
-            loadMap: function (track) {
+            loadMap: function (data) {
                 var mapOptions = {
                     zoom: 8,
                     mapTypeId: google.maps.MapTypeId.TERRAIN
                 };
                 var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-                var xmlData = $.parseXML(track.content);
+                var xmlData = $.parseXML(data);
                 var parser = new GPXParser(xmlData, map);
                 parser.setTrackColour("#ff0000");     // Set the track line colour
                 parser.setTrackWidth(5);          // Set the track line width
@@ -27,9 +27,9 @@
     app.factory('TrackService', function ($http) {
         return {
             loadTrack: function (track, callback) {
-                $http({method: 'GET', url: '/geolib/resources/tracks/' + track.id}).
+                $http({method: 'GET', url: '/geolib/resources/tracks/' + track._id}).
                     success(function (data, status, headers, config) {
-                        callback(data);
+                        callback(data, track);
                     });
             },
             listTracks: function (callback) {
@@ -43,9 +43,9 @@
     app.controller("GeoLibController", function ($scope, $http, TrackService, MapService) {
         var activeTrack = undefined;
         $scope.loadTrack = function (track) {
-            TrackService.loadTrack(track, function (track) {
+            TrackService.loadTrack(track, function (data, track) {
                 activeTrack = track;
-                MapService.loadMap(track);
+                MapService.loadMap(data);
             });
         };
         $scope.listTracks = function () {
@@ -54,7 +54,7 @@
             });
         };
         $scope.isActiveTrack = function (track) {
-            return activeTrack !== undefined && track !== undefined && activeTrack.id === track.id;
+            return activeTrack !== undefined && track !== undefined && activeTrack._id === track._id;
         };
 
         // TODO: clean up registration as callback for fileupload

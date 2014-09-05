@@ -10,10 +10,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
@@ -33,45 +31,28 @@ public class TrackResourceTest {
         when(trackService.listTracks()).thenReturn(expected);
 
         // exercise
-        final List<TrackMeta> actual = trackResource.listTracks();
+        final List<TrackDocument> actual = trackResource.listTracks();
 
         // assert
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void getTrack() {
-        final TrackDocument expected = Mockito.mock(TrackDocument.class);
+    public void getTrackContent() {
+        final TrackDocument trackDocumentMock = Mockito.mock(TrackDocument.class);
         final String id = "id";
         final String content = "content";
 
         // train
         reset();
-        when(trackService.getTrack(id)).thenReturn(Optional.of(expected));
-        when(expected.getId()).thenReturn(id);
-        when(expected.getContent()).thenReturn(content);
+        when(trackService.getTrackContent(id)).thenReturn(content);
 
         // exercise
-        final TrackContent actual = trackResource.getTrack(id);
+        final String actual = trackResource.getTrackContent(id);
 
         // assert
-        assertThat(actual.toString(), is(new TrackContent(id, content).toString()));
+        assertThat(actual, is(content));
     }
-
-    @Test
-    public void getTrack_null() {
-        final String fileName = "fileName";
-
-        // train
-        when(trackService.getTrack(fileName)).thenReturn(Optional.empty());
-
-        // exercise
-        final TrackContent actual = trackResource.getTrack(fileName);
-
-        // assert
-        assertNull(actual);
-    }
-
 
     @Before
     public void setUp() {

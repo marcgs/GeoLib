@@ -3,8 +3,6 @@ package com.mgomez.geolib.upload;
 import com.google.common.collect.Lists;
 import com.mgomez.geolib.track.boundary.TrackService;
 import com.mgomez.geolib.track.entity.TrackDocument;
-import com.mgomez.geolib.track.resource.TrackMeta;
-import com.mgomez.geolib.track.resource.TrackMetaFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -52,10 +50,10 @@ public class MultipartRequestHandlerTest {
         when(partMockWithContentType.getHeader("content-disposition")).thenReturn(contentDisposition);
 
         //exercise
-        final List<TrackMeta> actual = handler.handleUpload(requestMock);
+        final List<TrackDocument> actual = handler.handleUpload(requestMock);
 
         //assert
-        verify(trackService).addTrack(refEq(new TrackDocument(FILE_NAME, CONTENT), "uploadedDate"));
+        verify(trackService).addTrack(refEq(new TrackDocument(FILE_NAME, null), "uploadedDate"), eq(CONTENT));
         assertThat(actual.size(), is(1));
         assertThat(actual.get(0).getName(), is(FILE_NAME));
         // TODO: improve assertions
@@ -106,7 +104,7 @@ public class MultipartRequestHandlerTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        handler = new MultipartRequestHandler(trackService, new TrackMetaFactory());
+        handler = new MultipartRequestHandler(trackService);
     }
 
 }
