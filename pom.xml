@@ -71,7 +71,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>geolib.war</finalName>
+        <finalName>geolib</finalName>
     </build>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
