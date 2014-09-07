@@ -1,0 +1,40 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "parallels/ubuntu-14.04"
+
+  config.vm.network "forwarded_port", guest: 5984, host: 5984
+
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  # Only active as parallels does not support port forwarding yet
+  config.vm.network "private_network", ip: "192.168.33.33"
+
+  # Create a public network, which generally matched to bridged network.
+  # Bridged networks make the machine appear as another physical device on
+  # your network.
+  # config.vm.network "public_network"
+
+  # If true, then any SSH connections made will enable agent forwarding.
+  # Default value: false
+  # config.ssh.forward_agent = true
+
+  # Share an additional folder to the guest VM. The first argument is
+  # the path on the host to the actual folder. The second argument is
+  # the path on the guest to mount the folder. And the optional third
+  # argument is a set of non-required options.
+  # config.vm.synced_folder "../data", "/vagrant_data"
+
+  config.vm.provision "docker" do |d|
+  #  d.build_image "/vagrant/docker"
+      d.pull_images "shykes/couchdb"
+  end
+
+  config.vm.provision "shell",
+      inline: "docker run -d -p 5984:5984 shykes/couchdb /bin/sh -e /usr/bin/couchdb -a /etc/couchdb/default.ini -a /etc/couchdb/local.ini -b -r 5 -p /var/run/couchdb/couchdb.pid -o /dev/null -e /dev/null -R"
+
+end

@@ -5,6 +5,7 @@ import com.mgomez.geolib.config.GeoLibConfiguration;
 import com.mgomez.geolib.config.GeoLibConfigurationKey;
 import com.mgomez.geolib.track.boundary.couchdb.TrackServiceImpl;
 import com.mgomez.geolib.track.entity.TrackDocument;
+import org.ektorp.support.CouchDbDocument;
 import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Assert;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 
 public class TrackServiceImplTest {
 
-    public static final String TEST_DB_URL = "http://localhost:5984/";
+    public static final String TEST_DB_URL = "http://192.168.33.33:5984/";
     @Mock
     private GeoLibConfiguration configurationMock;
     private TrackServiceImpl controller;
@@ -44,7 +45,7 @@ public class TrackServiceImplTest {
         controller.addTrack(inputTrack2, content2);
         final List<TrackDocument> trackList = controller.listTracks();
         Assert.assertThat(trackList.size(), CoreMatchers.is(2));
-        final List<String> ids = trackList.stream().map(t -> t.getId()).collect(Collectors.toList());
+        final List<String> ids = trackList.stream().map(CouchDbDocument::getId).collect(Collectors.toList());
         Assert.assertThat(ids, CoreMatchers.is(Lists.newArrayList(inputTrack.getId(), inputTrack2.getId())));
     }
 
