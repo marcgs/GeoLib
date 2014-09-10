@@ -1,9 +1,8 @@
-package com.mgomez.geolib.track.boundary.impl;
+package com.mgomez.geolib.track.boundary.couchdb;
 
 import com.google.common.collect.Lists;
 import com.mgomez.geolib.config.GeoLibConfiguration;
 import com.mgomez.geolib.config.GeoLibConfigurationKey;
-import com.mgomez.geolib.track.boundary.couchdb.TrackServiceImpl;
 import com.mgomez.geolib.track.entity.TrackDocument;
 import org.ektorp.support.CouchDbDocument;
 import org.hamcrest.CoreMatchers;
