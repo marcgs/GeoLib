@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -53,10 +54,13 @@ public class MultipartRequestHandlerTest {
         final List<TrackDocument> actual = handler.handleUpload(requestMock);
 
         //assert
-        verify(trackService).addTrack(refEq(new TrackDocument(FILE_NAME, null), "uploadedDate"), eq(CONTENT));
         assertThat(actual.size(), is(1));
-        assertThat(actual.get(0).getName(), is(FILE_NAME));
-        // TODO: improve assertions
+
+        TrackDocument expectedTrackDocument = new TrackDocument(FILE_NAME, LocalDateTime.now());
+        verify(trackService).addTrack(refEq(expectedTrackDocument, "uploadedDate"), eq(CONTENT));
+        TrackDocument actualTrackDocument = actual.get(0);
+        assertThat(actualTrackDocument.getName(), is(expectedTrackDocument.getName()));
+        assertThat(actualTrackDocument.getId(), is(expectedTrackDocument.getId()));
     }
 
     @Test
