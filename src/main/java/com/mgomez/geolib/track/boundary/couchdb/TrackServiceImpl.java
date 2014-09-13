@@ -1,5 +1,6 @@
 package com.mgomez.geolib.track.boundary.couchdb;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.mgomez.geolib.config.GeoLibConfiguration;
 import com.mgomez.geolib.config.GeoLibConfigurationKey;
 import com.mgomez.geolib.track.boundary.TrackService;
@@ -26,22 +27,28 @@ import java.util.List;
  */
 public class TrackServiceImpl implements TrackService {
 
-    public static final String CONTENT_ATTACHMENT_KEY = "content";
-    public static final String CONTENT_TYPE = "application/octet-stream";
+     static final String CONTENT_ATTACHMENT_KEY = "content";
+     static final String CONTENT_TYPE = "application/octet-stream";
 
     private GeoLibConfiguration config;
     private TrackRepository trackRepository;
 
+    @SuppressWarnings("CdiInjectionPointsInspection")
     @Inject
     public TrackServiceImpl(GeoLibConfiguration config) {
         this.config = config;
+    }
+
+    @VisibleForTesting
+    TrackServiceImpl(GeoLibConfiguration config, TrackRepository trackRepository) {
+        this.config = config;
+        this.trackRepository = trackRepository;
     }
 
     @PostConstruct
     public void postConstruct() {
         initTrackRepository();
     }
-
 
     @Override
     public List<TrackDocument> listTracks() {
@@ -76,7 +83,7 @@ public class TrackServiceImpl implements TrackService {
 
 
     private void initTrackRepository() {
-        HttpClient httpClient = null;
+        HttpClient httpClient;
         try {
             httpClient = new StdHttpClient.Builder()
                     .url(config.getConfigEntry(GeoLibConfigurationKey.DB_URL))
