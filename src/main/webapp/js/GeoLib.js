@@ -13,12 +13,12 @@
                 var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
                 var xmlData = $.parseXML(data);
                 var parser = new GPXParser(xmlData, map);
-                parser.setTrackColour("#ff0000");     // Set the track line colour
-                parser.setTrackWidth(5);          // Set the track line width
-                parser.setMinTrackPointDelta(0.001);      // Set the minimum distance between track points
+                parser.setTrackColour("#ff0000");       // Set the track line colour
+                parser.setTrackWidth(5);                // Set the track line width
+                parser.setMinTrackPointDelta(0.001);    // Set the minimum distance between track points
                 parser.centerAndZoom(xmlData);
-                parser.addTrackpointsToMap();         // Add the trackpoints
-                parser.addWaypointsToMap();           // Add the waypoints
+                parser.addTrackpointsToMap();           // Add the trackpoints
+                parser.addWaypointsToMap();             // Add the waypoints
             }
         };
     })
@@ -41,7 +41,7 @@
     });
 
     app.controller("GeoLibController", function ($scope, $http, TrackService, MapService) {
-        var activeTrack = undefined;
+        var activeTrack;
         $scope.loadTrack = function (track) {
             TrackService.loadTrack(track, function (data, track) {
                 activeTrack = track;
