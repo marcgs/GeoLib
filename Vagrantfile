@@ -17,7 +17,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       d.run "shykes/couchdb",
         args: "-p 5984:5984 shykes/couchdb /bin/sh -e /usr/bin/couchdb -a /etc/couchdb/default.ini -a /etc/couchdb/local.ini -b -r 5 -p /var/run/couchdb/couchdb.pid -o /dev/null -e /dev/null -R"
       d.run "geolib",
-        args: "-it -p 8080:8080 -e GEOLIB_SECRET=Ge0Lib3ioOp54"
+        args: "-p 8080:8080"
   end
 
+  config.vm.provision "shell",
+      #inline: "while ! nc -q 1 localhost 5984 </dev/null; do sleep 1; done"
+      # workaround for giving time to couchdb enough time to start up
+      inline: "sleep 1"
 end
