@@ -7,7 +7,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: './',
 
 
     // frameworks to use
@@ -17,8 +17,10 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'src/main/webapp/js/**/*.js',
-      'src/test/webapp/js/**/*.spec.js'
+      'node_modules/angular/lib/angular.js',
+      'node_modules/angular-mocks/angular-mocks.js',
+      'src/main/webapp/js/GeoLib.js',
+      'src/test/webapp/js/GeoLib.spec.js'
     ],
 
 
@@ -53,16 +55,22 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
-    // start these browsers
-    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
+    browsers : ['PhantomJS'],
 
+    plugins : [
+          'karma-chrome-launcher',
+          'karma-firefox-launcher',
+          'karma-phantomjs-launcher',
+          'karma-jasmine',
+          'karma-junit-reporter'
+    ],
 
-    // Continuous Integration mode
-    // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false
+    junitReporter : {
+      outputFile: 'target/karma_unit.xml',
+      suite: 'unit'
+    }
   });
 };

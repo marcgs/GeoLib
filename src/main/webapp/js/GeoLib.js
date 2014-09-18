@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var app = angular.module('geolib', []);
+    var app = angular.module('GeoLib', []);
 
     app.factory('MapService', function () {
         return {
@@ -28,13 +28,13 @@
         return {
             loadTrack: function (track, callback) {
                 $http({method: 'GET', url: '/geolib/resources/tracks/' + track._id}).
-                    success(function (data, status, headers, config) {
+                    success(function (data) {
                         callback(data, track);
                     });
             },
             listTracks: function (callback) {
                 $http({method: 'GET', url: '/geolib/resources/tracks'}).
-                    success(function (data, status, headers, config) {
+                    success(function (data) {
                         callback(data);
                     });
             }};
