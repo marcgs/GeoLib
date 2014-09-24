@@ -19,6 +19,7 @@ module.exports = function(config) {
     files: [
       'node_modules/angular/lib/angular.js',
       'node_modules/angular-mocks/angular-mocks.js',
+      'node_modules/jquery/dist/jquery.js',
       'src/main/webapp/js/GeoLib.js',
       'src/test/webapp/js/GeoLib.spec.js'
     ],

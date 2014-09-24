@@ -40,7 +40,7 @@
             }};
     });
 
-    app.controller("GeoLibController", function ($scope, $http, TrackService, MapService) {
+    app.controller("GeoLibController", function ($scope, TrackService, MapService) {
         var activeTrack;
         $scope.loadTrack = function (track) {
             TrackService.loadTrack(track, function (data, track) {
@@ -57,13 +57,12 @@
             return activeTrack !== undefined && track !== undefined && activeTrack._id === track._id;
         };
 
-        // TODO: clean up registration as callback for fileupload
         $('[data-js-selector="fileupload"]').fileupload({
             dataType: 'json',
             done: function (e, uploadedTracks) {
                 var track = uploadedTracks.result[0];
-                $scope.tracks.push(track);
                 $scope.loadTrack(track);
+                $scope.tracks.push(track);
             }
         });
 
