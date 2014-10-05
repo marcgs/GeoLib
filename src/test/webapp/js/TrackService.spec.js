@@ -25,7 +25,6 @@ describe('GeoLib', function() {
             var trackMock = {_id: "id"},
                 expectedData = 'trackData';
 
-            //$httpBackend.when("GET", "/geolib/resources/tracks/id").respond([{}, {}, {}]);
             $httpBackend
                 .whenGET("/geolib/resources/tracks/id")
                 .respond(expectedData);
@@ -33,6 +32,22 @@ describe('GeoLib', function() {
             TrackService.loadTrack(trackMock, function (data, track) {
                 expect(data).toBe(expectedData);
                 expect(track).toBe(trackMock);
+            });
+
+            $httpBackend.flush();
+        });
+    });
+
+    describe('when listTrack is called', function() {
+        it('should list tracks', function() {
+            var expectedData = 'listTrackData';
+
+            $httpBackend
+                .whenGET("/geolib/resources/tracks")
+                .respond(expectedData);
+
+            TrackService.listTracks(function (data) {
+                expect(data).toBe(expectedData);
             });
 
             $httpBackend.flush();
