@@ -22,6 +22,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision "shell",
       #inline: "while ! nc -q 1 localhost 5984 </dev/null; do sleep 1; done"
-      # workaround for giving time to couchdb enough time to start up
+      # TODO: remove workaround for giving time to couchdb enough time to start up
       inline: "sleep 1"
 end
