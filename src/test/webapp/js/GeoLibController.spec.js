@@ -65,7 +65,7 @@ describe('GeoLib', function() {
         return $controller('GeoLibController', {
             '$scope': scope,
             TrackService: trackServiceMock,
-            MapService: mapServiceMock
+            mapService: mapServiceMock
         });
     }
 });
