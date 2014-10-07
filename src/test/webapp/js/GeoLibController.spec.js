@@ -64,7 +64,7 @@ describe('geolibApp', function() {
     function initController($controller, scope) {
         return $controller('GeoLibController', {
             '$scope': scope,
-            TrackService: trackServiceMock,
+            trackService: trackServiceMock,
             mapService: mapServiceMock
         });
     }

@@ -4,14 +4,14 @@
 
 describe('trackService', function() {
     var $httpBackend,
-        TrackService;
+        trackService;
 
     beforeEach(function() {
         module('geolibApp');
 
-        inject(function (_$httpBackend_, _TrackService_) {
+        inject(function (_$httpBackend_, _trackService_) {
             $httpBackend = _$httpBackend_;
-            TrackService = _TrackService_;
+            trackService = _trackService_;
         });
     });
 
@@ -29,7 +29,7 @@ describe('trackService', function() {
                 .whenGET("/geolib/resources/tracks/id")
                 .respond(expectedData);
 
-            TrackService.loadTrack(trackMock, function (data, track) {
+            trackService.loadTrack(trackMock, function (data, track) {
                 expect(data).toBe(expectedData);
                 expect(track).toBe(trackMock);
             });
@@ -46,7 +46,7 @@ describe('trackService', function() {
                 .whenGET("/geolib/resources/tracks")
                 .respond(expectedData);
 
-            TrackService.listTracks(function (data) {
+            trackService.listTracks(function (data) {
                 expect(data).toBe(expectedData);
             });
 

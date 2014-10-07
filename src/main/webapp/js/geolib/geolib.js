@@ -1,34 +1,18 @@
 (function () {
     'use strict';
 
-    var app = angular.module('geolibApp', ['geolibApp.Map']);
+    var app = angular.module('geolibApp', ['geolibApp.Map', 'geolibApp.Track']);
 
-    app.factory('TrackService', function ($http) {
-        return {
-            loadTrack: function (track, callback) {
-                $http({method: 'GET', url: '/geolib/resources/tracks/' + track._id}).
-                    success(function (data) {
-                        callback(data, track);
-                    });
-            },
-            listTracks: function (callback) {
-                $http({method: 'GET', url: '/geolib/resources/tracks'}).
-                    success(function (data) {
-                        callback(data);
-                    });
-            }};
-    });
-
-    app.controller("GeoLibController", function ($scope, TrackService, mapService) {
+    app.controller("GeoLibController", function ($scope, trackService, mapService) {
         var activeTrack;
         $scope.loadTrack = function (track) {
-            TrackService.loadTrack(track, function (data, track) {
+            trackService.loadTrack(track, function (data, track) {
                 activeTrack = track;
                 mapService.loadMap(data);
             });
         };
         $scope.listTracks = function () {
-            TrackService.listTracks(function (tracks) {
+            trackService.listTracks(function (tracks) {
                 $scope.tracks = tracks;
             });
         };
