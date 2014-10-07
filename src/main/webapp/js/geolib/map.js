@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('geolib.Map', [])
+    angular.module('geolibApp.Map', [])
 
     .factory('map', function() {
         return new google.maps.Map(

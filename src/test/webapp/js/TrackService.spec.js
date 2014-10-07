@@ -2,12 +2,12 @@
 
 'use strict';
 
-describe('GeoLib', function() {
+describe('trackService', function() {
     var $httpBackend,
         TrackService;
 
     beforeEach(function() {
-        module('GeoLib');
+        module('geolibApp');
 
         inject(function (_$httpBackend_, _TrackService_) {
             $httpBackend = _$httpBackend_;

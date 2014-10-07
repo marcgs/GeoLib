@@ -2,7 +2,7 @@
 
 'use strict';
 
-describe('GeoLib', function() {
+describe('geolibApp', function() {
 
     var fileUploadData,
         mapData,
@@ -16,7 +16,7 @@ describe('GeoLib', function() {
         };
 
     beforeEach(function() {
-        module('GeoLib');
+        module('geolibApp');
         $('<input data-js-selector="fileupload">').appendTo('body');
         $.fn.fileupload = function (input) { fileUploadData = input;};
     });

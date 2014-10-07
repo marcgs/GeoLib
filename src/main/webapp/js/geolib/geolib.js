@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var app = angular.module('GeoLib', ['geolib.Map']);
+    var app = angular.module('geolibApp', ['geolibApp.Map']);
 
     app.factory('TrackService', function ($http) {
         return {
