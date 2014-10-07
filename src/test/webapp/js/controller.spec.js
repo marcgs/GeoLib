@@ -21,7 +21,7 @@ describe('geolibApp', function() {
         $.fn.fileupload = function (input) { fileUploadData = input;};
     });
 
-    describe('GeoLib Controller', function(){
+    describe('geoLibController', function(){
 
         it('should initialize scope', inject(function($controller, $rootScope) {
             var scope = $rootScope.$new(),
@@ -62,7 +62,7 @@ describe('geolibApp', function() {
     });
 
     function initController($controller, scope) {
-        return $controller('GeoLibController', {
+        return $controller('geoLibController', {
             '$scope': scope,
             trackService: trackServiceMock,
             mapService: mapServiceMock
