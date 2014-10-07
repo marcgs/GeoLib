@@ -7,7 +7,7 @@ describe('trackService', function() {
         trackService;
 
     beforeEach(function() {
-        module('geolibApp');
+        module('geolibApp.Track');
 
         inject(function (_$httpBackend_, _trackService_) {
             $httpBackend = _$httpBackend_;

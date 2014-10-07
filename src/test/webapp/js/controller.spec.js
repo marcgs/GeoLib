@@ -16,7 +16,7 @@ describe('geolibApp', function() {
         };
 
     beforeEach(function() {
-        module('geolibApp');
+        module('geolibApp.Controller');
         $('<input data-js-selector="fileupload">').appendTo('body');
         $.fn.fileupload = function (input) { fileUploadData = input;};
     });
