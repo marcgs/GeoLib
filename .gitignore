@@ -1,6 +1,7 @@
 target
 out
 node_modules
+node
 .idea
 .vagrant
 *.iml
