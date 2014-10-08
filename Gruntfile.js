@@ -12,8 +12,6 @@ module.exports = function(grunt) {
             dist: {
                 src: [
                     'src/main/webapp/js/geolib/*.js'
-                    //'src/main/webapp/js/vendor/*.js',
-                    //'!**/*.min.js'
                 ],
                 dest: 'target/js/geolib.js'
             }
