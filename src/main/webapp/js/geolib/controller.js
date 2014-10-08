@@ -3,7 +3,7 @@
 
     var app = angular.module('geolibApp.Controller', []);
 
-    app.controller("geoLibController", function ($scope, trackService, mapService) {
+    app.controller("geolibController", function ($scope, trackService, mapService) {
         var activeTrack;
         $scope.loadTrack = function (track) {
             trackService.loadTrack(track, function (data, track) {

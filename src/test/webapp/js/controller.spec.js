@@ -2,7 +2,7 @@
 
 'use strict';
 
-describe('geolibApp', function() {
+describe('geolibController', function() {
 
     var fileUploadData,
         mapData,
@@ -21,48 +21,46 @@ describe('geolibApp', function() {
         $.fn.fileupload = function (input) { fileUploadData = input;};
     });
 
-    describe('geoLibController', function(){
 
-        it('should initialize scope', inject(function($controller, $rootScope) {
-            var scope = $rootScope.$new(),
-                controller = initController($controller, scope);
+    it('should initialize scope', inject(function($controller, $rootScope) {
+        var scope = $rootScope.$new(),
+            controller = initController($controller, scope);
 
-            expect(controller).toBeDefined();
-            expect(scope.loadTrack).toBeDefined();
-            expect(scope.listTracks).toBeDefined();
-            expect(scope.isActiveTrack).toBeDefined();
-            expect(scope.tracks).toBe(tracksMock);
-        }));
+        expect(controller).toBeDefined();
+        expect(scope.loadTrack).toBeDefined();
+        expect(scope.listTracks).toBeDefined();
+        expect(scope.isActiveTrack).toBeDefined();
+        expect(scope.tracks).toBe(tracksMock);
+    }));
 
-        it('should initialize fileuploader', inject(function($controller, $rootScope) {
-            var scope = $rootScope.$new(),
-                controller = initController($controller, scope);
+    it('should initialize fileuploader', inject(function($controller, $rootScope) {
+        var scope = $rootScope.$new(),
+            controller = initController($controller, scope);
 
-            expect(controller).toBeDefined();
-            expect(fileUploadData).toBeDefined();
-            expect(fileUploadData.dataType).toBe('json');
-            expect(fileUploadData.done).toBeDefined();
+        expect(controller).toBeDefined();
+        expect(fileUploadData).toBeDefined();
+        expect(fileUploadData.dataType).toBe('json');
+        expect(fileUploadData.done).toBeDefined();
 
-            var trackMock = 'track3';
-            fileUploadData.done(null, {result: [ trackMock]});
-            expect(scope.tracks.indexOf(trackMock)).toBe(2);
-        }));
+        var trackMock = 'track3';
+        fileUploadData.done(null, {result: [ trackMock]});
+        expect(scope.tracks.indexOf(trackMock)).toBe(2);
+    }));
 
-        it('should load tracks', inject(function($controller, $rootScope) {
-            var trackMock = { _id: "id"},
-                scope = $rootScope.$new(),
-                controller = initController($controller, scope);
+    it('should load tracks', inject(function($controller, $rootScope) {
+        var trackMock = { _id: "id"},
+            scope = $rootScope.$new(),
+            controller = initController($controller, scope);
 
-            expect(controller).toBeDefined();
-            expect(scope.isActiveTrack(trackMock)).toBeFalsy();
-            scope.loadTrack(trackMock);
-            expect(scope.isActiveTrack(trackMock)).toBeTruthy();
-        }));
+        expect(controller).toBeDefined();
+        expect(scope.isActiveTrack(trackMock)).toBeFalsy();
+        scope.loadTrack(trackMock);
+        expect(scope.isActiveTrack(trackMock)).toBeTruthy();
+    }));
 
-    });
 
     function initController($controller, scope) {
-        return $controller('geoLibController', {
+        return $controller('geolibController', {
             '$scope': scope,
             trackService: trackServiceMock,
             mapService: mapServiceMock
