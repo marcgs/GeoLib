@@ -15,7 +15,7 @@ module.exports = function(grunt) {
                     //'src/main/webapp/js/vendor/*.js',
                     //'!**/*.min.js'
                 ],
-                dest: 'target/js/<%= pkg.name %>.js'
+                dest: 'target/js/geolib.js'
             }
         },
 
@@ -26,7 +26,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'src/main/webapp/js/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+                    'src/main/webapp/js/geolib.min.js': ['<%= concat.dist.dest %>']
                 }
             }
         },
