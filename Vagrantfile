@@ -17,7 +17,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       d.run "shykes/couchdb",
         args: "-p 5984:5984 shykes/couchdb /bin/sh -e /usr/bin/couchdb -a /etc/couchdb/default.ini -a /etc/couchdb/local.ini -b -r 5 -p /var/run/couchdb/couchdb.pid -o /dev/null -e /dev/null -R"
       d.run "geolib",
-        args: "-p 8080:8080"
+        args: "-p 8080:8080 -e GEOLIB_MOCK=true"
   end
 
   config.vm.provision "shell",
