@@ -1,6 +1,7 @@
 package com.mgomez.geolib.config;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.mgomez.geolib.common.config.EnvVars;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.properties.EncryptableProperties;
 
@@ -15,7 +16,6 @@ import java.util.Properties;
 public class GeoLibConfiguration {
 
     public static final String DEFAULT_CONFIG_FILE = "geolib.properties";
-    public static final String GEOLIB_SECRET_ENV = "GEOLIB_SECRET";
 
     private Properties properties;
     private String configFile;
@@ -25,7 +25,8 @@ public class GeoLibConfiguration {
         this(DEFAULT_CONFIG_FILE);
     }
 
-    public GeoLibConfiguration(String configFile) {
+    @VisibleForTesting
+    GeoLibConfiguration(String configFile) {
         this.configFile = configFile;
     }
 
@@ -61,6 +62,6 @@ public class GeoLibConfiguration {
 
     @VisibleForTesting
     String getSecret() {
-        return System.getenv(GEOLIB_SECRET_ENV);
+        return System.getenv(EnvVars.GEOLIB_SECRET.name());
     }
 }

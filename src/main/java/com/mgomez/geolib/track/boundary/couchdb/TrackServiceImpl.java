@@ -1,6 +1,7 @@
 package com.mgomez.geolib.track.boundary.couchdb;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.mgomez.geolib.common.mock.Mockable;
 import com.mgomez.geolib.config.GeoLibConfiguration;
 import com.mgomez.geolib.config.GeoLibConfigurationKey;
 import com.mgomez.geolib.track.boundary.TrackService;
@@ -25,6 +26,7 @@ import java.util.List;
 /**
  * @author: Marc Gomez / marc.gomez82 (at) gmail.com
  */
+@Mockable
 public class TrackServiceImpl implements TrackService {
 
      static final String CONTENT_ATTACHMENT_KEY = "content";

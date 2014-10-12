@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 
 public class TrackServiceImplTest {
 
-    private TrackServiceImpl trackService;
+    private TrackServiceMockImpl trackService;
 
     @Test
     public void addAndGetTracks() {
@@ -47,7 +47,7 @@ public class TrackServiceImplTest {
 
     @Before
     public void setUp() {
-        trackService = new TrackServiceImpl();
+        trackService = new TrackServiceMockImpl();
     }
 
 

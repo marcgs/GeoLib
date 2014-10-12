@@ -2,10 +2,10 @@ package com.mgomez.geolib.track.boundary.inmemory;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.mgomez.geolib.common.mock.MockAlternative;
 import com.mgomez.geolib.track.boundary.TrackService;
 import com.mgomez.geolib.track.entity.TrackDocument;
 
-import javax.enterprise.inject.Alternative;
 import javax.inject.Singleton;
 import java.util.List;
 import java.util.Map;
@@ -14,18 +14,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author: Marc Gomez / marc.gomez82 (at) gmail.com
  */
-@Alternative
+@MockAlternative
 @Singleton
-public class TrackServiceImpl implements TrackService {
+public class TrackServiceMockImpl implements TrackService {
 
     private Map<String, TrackDocument> trackDocuments = Maps.newHashMap();
-    private Map<String, String> trackContents = Maps.newHashMap();
-    private AtomicInteger counter = new AtomicInteger();
-
     @Override
     public List<TrackDocument> listTracks() {
         return Lists.newArrayList(trackDocuments.values());
     }
+    private Map<String, String> trackContents = Maps.newHashMap();
+
+    private AtomicInteger counter = new AtomicInteger();
 
     @Override
     public void addTrack(TrackDocument track, String content) {
