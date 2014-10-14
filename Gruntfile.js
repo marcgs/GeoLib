@@ -17,6 +17,15 @@ module.exports = function(grunt) {
             }
         },
 
+        copy: {
+            js: {
+                src: 'node_modules/angular/lib/angular.min*',
+                dest: 'src/main/webapp/js/deps/',
+                expand: true,
+                flatten: true
+            }
+        },
+
         uglify: {
             options: {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n',
@@ -53,6 +62,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-karma');
 
     grunt.registerTask('default', ['concat', 'uglify']);
