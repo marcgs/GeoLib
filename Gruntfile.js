@@ -19,8 +19,12 @@ module.exports = function(grunt) {
 
         copy: {
             js: {
-                src: 'node_modules/angular/lib/angular.min*',
-                dest: 'src/main/webapp/js/deps/',
+                src: [
+                    'node_modules/angular/lib/angular.min*',
+                    'node_modules/bootstrap/dist/css/bootstrap.min.*',
+                    'node_modules/bootstrap/dist/js/bootstrap.min.*'
+                ],
+                dest: 'src/main/webapp/deps/',
                 expand: true,
                 flatten: true
             }

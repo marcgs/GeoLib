@@ -3,5 +3,5 @@ node_modules
 node
 .idea
 .vagrant
-src/main/webapp/js/deps
+src/main/webapp/deps
 *.iml
