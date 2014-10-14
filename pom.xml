@@ -69,6 +69,18 @@
             <version>1.9.5</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>2.43.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-chrome-driver</artifactId>
+            <version>2.43.1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <finalName>geolib</finalName>
@@ -119,7 +131,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.17</version>
                 <configuration>
-                    <excludedGroups>com.mgomez.geolib.integrationtest.IntegrationTest</excludedGroups>
+                    <excludedGroups>com.mgomez.geolib.integrationtest.IntegrationTest,com.mgomez.geolib.functionaltest.FunctionalTest</excludedGroups>
                 </configuration>
             </plugin>
             <plugin>
@@ -127,6 +139,31 @@
                 <version>2.17</version>
                 <configuration>
                     <groups>com.mgomez.geolib.integrationtest.IntegrationTest</groups>
+                    <failIfNoTests>true</failIfNoTests>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>verify</id>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <groups>com.mgomez.geolib.functionaltest.FunctionalTest</groups>
                     <failIfNoTests>true</failIfNoTests>
                     <includes>
                         <include>**/*Test.java</include>
