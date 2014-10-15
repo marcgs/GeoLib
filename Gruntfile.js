@@ -22,7 +22,8 @@ module.exports = function(grunt) {
                 src: [
                     'node_modules/angular/lib/angular.min*',
                     'node_modules/bootstrap/dist/css/bootstrap.min.*',
-                    'node_modules/bootstrap/dist/js/bootstrap.min.*'
+                    'node_modules/bootstrap/dist/js/bootstrap.min.*',
+                    'node_modules/jquery/dist/jquery.min.*'
                 ],
                 dest: 'src/main/webapp/deps/',
                 expand: true,
@@ -69,5 +70,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-karma');
 
-    grunt.registerTask('default', ['concat', 'uglify']);
+    grunt.registerTask('default', ['copy', 'concat', 'uglify']);
 };
