@@ -1,5 +1,9 @@
 /*Workaround for making map work with bootstrap*/
-html, body, .container-fluid, #map-row, #map-canvas {
+html, body {
     height: 100%
+}
+
+.full-height {
+    height: 100%;
 }
 
