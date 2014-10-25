@@ -3,20 +3,17 @@
 
     angular.module('geolibApp.Map', [])
 
-    .factory('map', function() {
-        return new google.maps.Map(
-            document.getElementById("map-canvas"),
-            {
-                zoom: 8,
-                mapTypeId: google.maps.MapTypeId.TERRAIN
-            }
-        );
-        })
-
-    .factory('mapService', function (map) {
+    .factory('mapService', function () {
         return {
             loadMap: function (data) {
                 var xmlData = $.parseXML(data);
+                var map = new google.maps.Map(
+                    document.getElementById("map-canvas"),
+                    {
+                        zoom: 8,
+                        mapTypeId: google.maps.MapTypeId.TERRAIN
+                    }
+                    );
                 var parser = new GPXParser(xmlData, map);
                 parser.setTrackColour("#ff0000");       // Set the track line colour
                 parser.setTrackWidth(5);                // Set the track line width

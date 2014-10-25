@@ -1,9 +1,12 @@
 (function () {
     'use strict';
 
-    var app = angular.module('geolibApp.Controller', []);
+    angular.module('geolibApp.Controller', [])
 
-    app.controller("geolibController", function ($scope, trackService, mapService) {
+    .controller("layoutController", function ($scope) {
+    })
+
+    .controller("geolibController", function ($scope, trackService, mapService) {
         var activeTrack;
         $scope.loadTrack = function (track) {
             trackService.loadTrack(track, function (data, track) {
