@@ -1,6 +1,7 @@
 target
 node_modules
 node
+intellij
 .idea
 .vagrant
 src/main/webapp/deps
