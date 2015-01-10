@@ -5,27 +5,16 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
-        concat: {
-            options: {
-                separator: ';'
-            },
-            dist: {
-                src: [
-                    'src/main/webapp/js/geolib/*.js'
-                ],
-                dest: 'target/js/geolib.js'
-            }
-        },
-
         copy: {
             js: {
                 src: [
                     'node_modules/angular/lib/angular.min*',
                     'node_modules/bootstrap/dist/css/bootstrap.min.*',
                     'node_modules/bootstrap/dist/js/bootstrap.min.*',
-                    'node_modules/jquery/dist/jquery.min.*'
+                    'node_modules/jquery/dist/jquery.min.*',
+                    'src/main/frontend/js/vendor/*.js'
                 ],
-                dest: 'src/main/webapp/deps/',
+                dest: 'src/main/webapp/assets/js',
                 expand: true,
                 flatten: true
             }
@@ -34,12 +23,13 @@ module.exports = function(grunt) {
         uglify: {
             options: {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n',
-                mangle: false
+                mangle: false,
+                sourceMap: true,
+                sourceMapIncludeSources : true
             },
             dist: {
-                files: {
-                    'src/main/webapp/js/geolib.min.js': ['<%= concat.dist.dest %>']
-                }
+                src: 'src/main/frontend/js/geolib/*.js',
+                dest: 'src/main/webapp/assets/js/geolib.min.js'
             }
         },
 
@@ -70,5 +60,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-karma');
 
-    grunt.registerTask('default', ['copy', 'concat', 'uglify']);
+    grunt.registerTask('default', ['copy', 'uglify']);
 };

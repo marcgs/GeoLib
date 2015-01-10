@@ -4,5 +4,5 @@ node
 intellij
 .idea
 .vagrant
-src/main/webapp/deps
 *.iml
+src/main/webapp/assets
